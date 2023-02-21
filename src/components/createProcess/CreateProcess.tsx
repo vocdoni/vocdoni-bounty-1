@@ -3,6 +3,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useAccount } from 'wagmi';
 import CreateProcessAddresses from './CreateProcessAddresses';
 import CreateProcessHeader from './CreateProcessHeader';
+import CreateProcessQuestions from './CreateProcessQuestions';
 
 type FormValues = {
   titleElection: string;
@@ -14,7 +15,7 @@ type FormValues = {
   questions: {
     titleQuestion: string;
     descriptionQuestion: string;
-    choices: string[];
+    options: string[];
   }[];
 };
 
@@ -33,7 +34,7 @@ const CreateProcess = () => {
         {
           titleQuestion: '',
           descriptionQuestion: '',
-          choices: ['', ''],
+          options: ['', ''],
         },
       ],
     },
@@ -56,6 +57,7 @@ const CreateProcess = () => {
       >
         <CreateProcessHeader />
         <CreateProcessAddresses />
+        <CreateProcessQuestions />
         <Button type="submit">Submit</Button>
       </Flex>
     </FormProvider>
