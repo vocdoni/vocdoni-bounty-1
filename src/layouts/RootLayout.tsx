@@ -1,5 +1,6 @@
 import { Box, Flex } from '@chakra-ui/react';
 import { Outlet } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 
 const RootLayout = () => {
   return (
@@ -10,6 +11,7 @@ const RootLayout = () => {
       maxWidth="1200px"
       margin="0 auto"
     >
+      <Navbar />
       <Box mb={8}>
         <Outlet />
       </Box>
