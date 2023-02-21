@@ -3,6 +3,7 @@ import {
   createRoutesFromElements,
   Route,
 } from 'react-router-dom';
+import CreateProcess from '../components/createProcess/CreateProcess';
 import ProtectedRoutes from '../components/ProtectedRoutes';
 import RootLayout from '../layouts/RootLayout';
 import Home from '../pages/Home';
@@ -12,8 +13,8 @@ const router = createBrowserRouter(
     <Route path="/" element={<RootLayout />}>
       <Route index element={<Home />} />
       <Route element={<ProtectedRoutes />}>
-        <Route path="createlection" element={null} />
-        <Route path="electionslist" element={null} />
+        <Route path="createprocess" element={<CreateProcess />} />
+        <Route path="processeslist" element={null} />
       </Route>
 
       <Route path="*" element={null} />

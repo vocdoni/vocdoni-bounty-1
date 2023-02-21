@@ -26,8 +26,8 @@ const Navbar = () => {
           </NavLink>
         </Box>
 
-        <NavLink to="createlection">Create Process</NavLink>
-        <NavLink to="electionslist">Elections List</NavLink>
+        <NavLink to="createprocess">Create Process</NavLink>
+        <NavLink to="processeslist">Processes List</NavLink>
         <ConnectButton accountStatus="avatar" chainStatus="icon" />
 
         <ColorModeSwitcher mb={1} size="sm" justifySelf="flex-end" />
