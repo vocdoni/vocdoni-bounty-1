@@ -1,6 +1,7 @@
 import { Button, Flex } from '@chakra-ui/react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useAccount } from 'wagmi';
+import CreateElectionOptions from './CreateElectionOptions';
 import CreateProcessAddresses from './CreateProcessAddresses';
 import CreateProcessHeader from './CreateProcessHeader';
 import CreateProcessQuestions from './CreateProcessQuestions';
@@ -8,6 +9,11 @@ import CreateProcessQuestions from './CreateProcessQuestions';
 type FormValues = {
   titleElection: string;
   descriptionElection: string;
+  electionType: {
+    autoStart: boolean;
+    interruptible: boolean;
+    secretUntilTheEnd: boolean;
+  };
   addresses: {
     address: string;
     weight: number;
@@ -26,6 +32,11 @@ const CreateProcess = () => {
     defaultValues: {
       titleElection: '',
       descriptionElection: '',
+      electionType: {
+        autoStart: true,
+        interruptible: true,
+        secretUntilTheEnd: true,
+      },
       addresses: [
         { address, weight: 0 },
         { address: '', weight: 0 },
@@ -56,6 +67,7 @@ const CreateProcess = () => {
         onSubmit={methods.handleSubmit(onSubmit)}
       >
         <CreateProcessHeader />
+        <CreateElectionOptions />
         <CreateProcessAddresses />
         <CreateProcessQuestions />
         <Button type="submit">Submit</Button>

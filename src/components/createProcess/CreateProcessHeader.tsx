@@ -7,7 +7,9 @@ const CreateProcessHeader = () => {
     <Box p={4} bg="gray.100" borderRadius={8}>
       <Box as="fieldset" p={4} pt={2} borderRadius={8} bg="white">
         <FormControl mb={4}>
-          <FormLabel htmlFor={'titleElection'}>Title</FormLabel>
+          <FormLabel htmlFor={'titleElection'} fontSize="1.3em">
+            Title
+          </FormLabel>
           <Input {...register('titleElection')} placeholder="Title" />
         </FormControl>
         <FormControl>
