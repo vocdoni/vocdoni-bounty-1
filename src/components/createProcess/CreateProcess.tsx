@@ -1,6 +1,7 @@
 import { Button, Flex } from '@chakra-ui/react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useAccount } from 'wagmi';
+import CreateProcessAddresses from './CreateProcessAddresses';
 import CreateProcessHeader from './CreateProcessHeader';
 
 type FormValues = {
@@ -54,6 +55,7 @@ const CreateProcess = () => {
         onSubmit={methods.handleSubmit(onSubmit)}
       >
         <CreateProcessHeader />
+        <CreateProcessAddresses />
         <Button type="submit">Submit</Button>
       </Flex>
     </FormProvider>
