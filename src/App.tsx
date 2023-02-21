@@ -1,5 +1,9 @@
 import { ChakraProvider, theme, useColorMode } from '@chakra-ui/react';
-import { darkTheme, lightTheme, RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import {
+  darkTheme,
+  lightTheme,
+  RainbowKitProvider,
+} from '@rainbow-me/rainbowkit';
 import { RouterProvider } from 'react-router-dom';
 import { WagmiConfig } from 'wagmi';
 import { chains, wagmiClient } from './lib/rainbow';
@@ -25,7 +29,6 @@ export const App = () => {
     <ChakraProvider theme={theme}>
       <WagmiConfig client={wagmiClient}>
         <RainbowKitProvider chains={chains} theme={rainbowStyles}>
-          {/* <ColorModeSwitcher justifySelf="flex-end" /> */}
           <RouterProvider router={router} />
         </RainbowKitProvider>
       </WagmiConfig>
