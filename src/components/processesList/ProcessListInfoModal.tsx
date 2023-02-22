@@ -29,7 +29,7 @@ const ProcessListInfoModal = ({ el, isOpen, onClose }: props) => (
           <Text>Start date: {formatDate(el.startDate)}</Text>
           <Text>End date: {formatDate(el.endDate)}</Text>
           <Button alignSelf="center" mt={4}>
-            <Link to={`process/${el.raw.electionId}`}>More info</Link>
+            <Link to={`/process/${el.raw.electionId}`}>More info</Link>
           </Button>
         </Flex>
       </ModalBody>

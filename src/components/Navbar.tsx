@@ -1,7 +1,6 @@
 import { Box, Flex } from '@chakra-ui/react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { NavLink } from 'react-router-dom';
-import { ColorModeSwitcher } from '../ColorModeSwitcher';
 import VocdoniIcon from './icons/VocdoniIcon';
 
 const Navbar = () => {
@@ -30,7 +29,7 @@ const Navbar = () => {
         <NavLink to="processeslist">Processes List</NavLink>
         <ConnectButton accountStatus="avatar" chainStatus="icon" />
 
-        <ColorModeSwitcher mb={1} size="sm" justifySelf="flex-end" />
+        {/* <ColorModeSwitcher mb={1} size="sm" justifySelf="flex-end" /> */}
       </Flex>
     </Box>
   );
