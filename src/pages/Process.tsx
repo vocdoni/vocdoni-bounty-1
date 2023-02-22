@@ -1,23 +1,10 @@
-import { Text } from '@chakra-ui/react';
 import { useLoaderData } from 'react-router-dom';
+import ProcessElection from '../components/processElection/ProcessElection';
 
 const Process = () => {
   let id = useLoaderData();
 
-  //   const { data: signer } = useSigner();
-
-  //   const client = getClient(signer);
-
-  //   const getInfo = async () => {
-  //     const info = await client.fetchElection(id);
-  //   };
-
-  //   useEffect(() => {
-  //     getInfo();
-  //   }, []);
-
-  console.log(typeof id);
-  return <Text>Process</Text>;
+  return <ProcessElection id={id} />;
 };
 
 export const getProcessInfo = ({ params }: any) => {

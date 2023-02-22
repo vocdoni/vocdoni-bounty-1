@@ -8,7 +8,9 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
+import { useClientContext } from '@vocdoni/react-components';
 import { FaPause, FaPlay, FaStop } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import ProcessListInfoModal from './ProcessListInfoModal';
 
 interface props {
@@ -17,6 +19,7 @@ interface props {
 
 const ProcessListRow = ({ el }: props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { client } = useClientContext();
 
   return (
     <>
@@ -30,18 +33,20 @@ const ProcessListRow = ({ el }: props) => {
         width={{ base: '90%', lg: '650px' }}
         boxShadow="0px 0px 8px 2px rgba(69,69,69,0.3)"
       >
-        <Box isTruncated flex="1 1 auto">
-          <Text width="100%" isTruncated title={el.title.default}>
-            {el.title.default}
-          </Text>
-          <Text
-            width="100%"
-            color="gray.500"
-            isTruncated
-            title={el.raw.electionId}
-          >
-            {el.raw.electionId}
-          </Text>
+        <Box isTruncated flex="1 1 auto" cursor="pointer">
+          <Link to={`/process/${el.raw.electionId}`}>
+            <Text width="100%" isTruncated title={el.title.default}>
+              {el.title.default}
+            </Text>
+            <Text
+              width="100%"
+              color="gray.500"
+              isTruncated
+              title={el.raw.electionId}
+            >
+              {el.raw.electionId}
+            </Text>
+          </Link>
         </Box>
         <HStack spacing={4} justifyContent="end" flex="0 0 160px">
           <ButtonGroup size="sm" isAttached variant="outline">
