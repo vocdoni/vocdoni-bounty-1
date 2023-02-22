@@ -21,7 +21,9 @@ type FormValues = {
   questions: {
     titleQuestion: string;
     descriptionQuestion: string;
-    options: string[];
+    options: {
+      option: string;
+    }[];
   }[];
 };
 
@@ -45,7 +47,7 @@ const CreateProcess = () => {
         {
           titleQuestion: '',
           descriptionQuestion: '',
-          options: ['', ''],
+          options: [{ option: '' }, { option: '' }],
         },
       ],
     },

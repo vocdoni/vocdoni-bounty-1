@@ -1,13 +1,14 @@
 import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
 import {
   Box,
+  Flex,
   FormControl,
   FormLabel,
   HStack,
   IconButton,
   Input,
 } from '@chakra-ui/react';
-import { useFormContext } from 'react-hook-form';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 
 interface props {
   question: {
@@ -18,8 +19,16 @@ interface props {
   index: number;
   remove: () => void;
 }
-const CreateProcessQuestion = ({ question, index, remove }: props) => {
+const CreateProcessQuestion = ({ index, remove }: props) => {
   const { register } = useFormContext();
+  const {
+    fields,
+    append,
+    remove: removeOption,
+  } = useFieldArray({
+    name: `questions.${index}.options`,
+  });
+
   return (
     <Box bg="white" p={4} borderRadius={8}>
       <HStack justify="space-between" mb={4}>
@@ -36,7 +45,10 @@ const CreateProcessQuestion = ({ question, index, remove }: props) => {
         <FormLabel htmlFor={`questions.${index}.titleQuestion`}>
           Title
         </FormLabel>
-        <Input {...register(`questions.${index}.titleQuestion` as const)} />
+        <Input
+          {...register(`questions.${index}.titleQuestion` as const)}
+          placeholder="Title"
+        />
       </FormControl>
       <FormControl>
         <FormLabel htmlFor={`questions.${index}.descriptionQuestion`}>
@@ -44,16 +56,35 @@ const CreateProcessQuestion = ({ question, index, remove }: props) => {
         </FormLabel>
         <Input
           {...register(`questions.${index}.descriptionQuestion` as const)}
+          placeholder="Description"
         />
       </FormControl>
       <HStack justifyContent="space-between" mb={4} mt={8}>
         <FormLabel>Options</FormLabel>
-        <IconButton type="button" icon={<AddIcon />} aria-label="Add option" />
+        <IconButton
+          type="button"
+          icon={<AddIcon />}
+          aria-label="Add option"
+          onClick={() => append({ option: '' })}
+        />
       </HStack>
-      {question.options.map((ch: any, idx: number) => (
-        <FormControl key={idx}>
-          <FormLabel>Option {idx + 1}</FormLabel>
-          <Input {...register(`questions.${index}.choices.${idx}` as const)} />
+      {fields.map((_, idx: number) => (
+        <FormControl key={idx} mb={4}>
+          <Flex alignItems="center">
+            <FormLabel>Option {idx + 1}</FormLabel>
+
+            <IconButton
+              ml="auto"
+              type="button"
+              icon={<DeleteIcon />}
+              aria-label="delete option"
+              onClick={() => removeOption(idx)}
+            />
+          </Flex>
+          <Input
+            {...register(`questions.${index}.options.${idx}.option` as const)}
+            placeholder={`Option ${idx + 1}`}
+          />
         </FormControl>
       ))}
     </Box>

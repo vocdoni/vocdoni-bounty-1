@@ -29,7 +29,7 @@ const CreateProcessQuestions = () => {
             append({
               titleQuestion: '',
               descriptionQuestion: '',
-              options: ['', ''],
+              options: [{ option: '' }, { option: '' }],
             })
           }
         />
