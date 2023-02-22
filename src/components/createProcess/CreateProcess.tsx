@@ -1,14 +1,21 @@
-import { Button, Flex } from '@chakra-ui/react';
+import { Button, Flex, Spinner } from '@chakra-ui/react';
+import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useAccount } from 'wagmi';
+import { useAccount, useSigner } from 'wagmi';
+import {
+  getClient,
+  getPlainCensus,
+  handlerCreateElection,
+  updateBalance,
+} from '../../lib/sdkApi';
 import CreateElectionOptions from './CreateElectionOptions';
 import CreateProcessAddresses from './CreateProcessAddresses';
 import CreateProcessHeader from './CreateProcessHeader';
 import CreateProcessQuestions from './CreateProcessQuestions';
 
 type FormValues = {
-  titleElection: string;
-  descriptionElection: string;
+  titleProcess: string;
+  descriptionProcess: string;
   electionType: {
     autoStart: boolean;
     interruptible: boolean;
@@ -29,11 +36,15 @@ type FormValues = {
 
 const CreateProcess = () => {
   const { address } = useAccount();
+  // const { client } = useClientContext();
+  const { data: signer } = useSigner();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const methods = useForm<FormValues>({
     defaultValues: {
-      titleElection: '',
-      descriptionElection: '',
+      titleProcess: '',
+      descriptionProcess: '',
       electionType: {
         autoStart: true,
         interruptible: true,
@@ -53,7 +64,7 @@ const CreateProcess = () => {
     },
   });
 
-  const onSubmit = (data: any) => console.log(data);
+  const onSubmit = (data: any) => handleSubmit(data, signer, setIsLoading);
 
   return (
     <FormProvider {...methods}>
@@ -72,10 +83,39 @@ const CreateProcess = () => {
         <CreateElectionOptions />
         <CreateProcessAddresses />
         <CreateProcessQuestions />
-        <Button type="submit">Submit</Button>
+        <Button type="submit">
+          {isLoading ? <Spinner width="20px" height="20px" /> : 'Submit'}
+        </Button>
       </Flex>
     </FormProvider>
   );
+};
+
+const handleSubmit = async (
+  data: FormValues,
+  signer: any,
+  setIsLoading: any
+) => {
+  setIsLoading(true);
+  const client = getClient(signer);
+  try {
+    updateBalance(client);
+    const addresses = data.addresses.map((add) => add.address);
+
+    const census = await getPlainCensus(addresses);
+
+    const id = await handlerCreateElection(data, census, client);
+
+    console.log('id', id);
+
+    const info = await client.fetchElection(id);
+
+    console.log('Process', info);
+  } catch (err: any) {
+    console.log(err.message);
+  } finally {
+    setIsLoading(false);
+  }
 };
 
 export default CreateProcess;

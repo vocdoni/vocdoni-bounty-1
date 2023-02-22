@@ -8,7 +8,6 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
-import { useClientContext } from '@vocdoni/react-components';
 import { FaPause, FaPlay, FaStop } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import ProcessListInfoModal from './ProcessListInfoModal';
@@ -19,7 +18,7 @@ interface props {
 
 const ProcessListRow = ({ el }: props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { client } = useClientContext();
+  // const { client } = useClientContext();
 
   return (
     <>

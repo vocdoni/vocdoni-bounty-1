@@ -1,4 +1,4 @@
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Flex, HStack, Spinner } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useSigner } from 'wagmi';
 import { getClient } from '../../lib/sdkApi';
@@ -38,6 +38,9 @@ const ProcessesList = () => {
   return (
     <Box m="16px auto" p={4} width={{ base: '90%', lg: '650px' }}>
       <ProcessesListFilters setSearch={setSearch} />
+      <HStack>
+        {!electionsList.length && <Spinner size="lg" marginX="auto" mt={12} />}
+      </HStack>
       <Flex direction="column" gap={4} mt={8} mx="auto">
         {electionsListFiltered.map((el: any) => (
           <ProcessListRow key={el.id} el={el} />

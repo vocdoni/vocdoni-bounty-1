@@ -49,7 +49,7 @@ const addQuestions = (election: any, questions: any) => {
     title: question.title,
     description: question.description,
     options: question.options.map((q: any, i: number) => ({
-      title: q,
+      title: q.option,
       value: i,
     })),
   }));
@@ -68,18 +68,18 @@ export const handlerCreateElection = async (
   endDate.setHours(endDate.getHours() + 10);
 
   const election = Election.from({
-    title: formValues.title,
-    description: formValues.description,
+    title: formValues.titleProcess,
+    description: formValues.descriptionProcess,
     header: 'https://source.unsplash.com/random',
     streamUri: 'https://source.unsplash.com/random',
     endDate: endDate.getTime(),
     electionType: {
-      autoStart: formValues.autostart,
-      interruptible: formValues.interruptible,
-      secretUntilTheEnd: formValues.encrypted,
+      autoStart: formValues.electionType.autostart,
+      interruptible: formValues.electionType.interruptible,
+      secretUntilTheEnd: formValues.electionType.encrypted,
     },
 
-    voteType: { maxVoteOverwrites: Number(formValues.maxVoteOverwrites.times) },
+    // voteType: { maxVoteOverwrites: Number(formValues.maxVoteOverwrites.times) },
     census,
   });
   addQuestions(election, formValues.questions);
