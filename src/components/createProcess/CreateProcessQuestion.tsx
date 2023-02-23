@@ -41,7 +41,7 @@ const CreateProcessQuestion = ({ index, remove }: props) => {
           onClick={remove}
         />
       </HStack>
-      <FormControl>
+      <FormControl mb={4}>
         <FormLabel>Title</FormLabel>
         <Input
           {...register(`questions.${index}.titleQuestion` as const)}

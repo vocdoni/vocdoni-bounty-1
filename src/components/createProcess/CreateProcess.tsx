@@ -4,7 +4,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useAccount, useSigner } from 'wagmi';
 import {
   getClient,
-  getWeightedCensus,
+  getPlainCensus,
   handlerCreateElection,
   updateBalance,
 } from '../../lib/sdkApi';
@@ -43,6 +43,7 @@ type FormValues = {
 const CreateProcess = () => {
   const { address } = useAccount();
   // const { client } = useClientContext();
+
   const { data: signer } = useSigner();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -122,8 +123,9 @@ const handleSubmit = async (
     //   const addresses = data.addresses.map((add) => add.address);
     //   census = await getPlainCensus(addresses);
     // }
-    
-    census = await getWeightedCensus(data.addresses);
+
+    const addresses = data.addresses.map((add) => add.address);
+    census = await getPlainCensus(addresses);
 
     const id = await handlerCreateElection(data, census, client);
 
