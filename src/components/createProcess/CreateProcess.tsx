@@ -80,7 +80,7 @@ const CreateProcess = () => {
     handleSubmit(data, signer, setIsLoading);
   };
 
-  console.log(methods.watch());
+  // console.log('hello');
 
   return (
     <FormProvider {...methods}>
