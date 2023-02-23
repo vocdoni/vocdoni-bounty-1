@@ -35,9 +35,7 @@ const CreateProcessAddresses = () => {
         {fields.map((add, i) => (
           <FormControl key={add.id} mb={4}>
             <Flex alignItems="center">
-              <FormLabel htmlFor={`addresses.${i}.address`}>{`Address ${
-                i + 1
-              }`}</FormLabel>
+              <FormLabel>{`Address ${i + 1}`}</FormLabel>
 
               <IconButton
                 ml="auto"

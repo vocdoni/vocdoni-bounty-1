@@ -42,18 +42,14 @@ const CreateProcessQuestion = ({ index, remove }: props) => {
         />
       </HStack>
       <FormControl>
-        <FormLabel htmlFor={`questions.${index}.titleQuestion`}>
-          Title
-        </FormLabel>
+        <FormLabel>Title</FormLabel>
         <Input
           {...register(`questions.${index}.titleQuestion` as const)}
           placeholder="Title"
         />
       </FormControl>
       <FormControl>
-        <FormLabel htmlFor={`questions.${index}.descriptionQuestion`}>
-          Description
-        </FormLabel>
+        <FormLabel>Description</FormLabel>
         <Input
           {...register(`questions.${index}.descriptionQuestion` as const)}
           placeholder="Description"

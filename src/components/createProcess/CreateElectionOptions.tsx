@@ -18,15 +18,14 @@ const CreateElectionOptions = () => {
           <Text as="legend" fontSize="1.3em">
             Election options
           </Text>
+
           <HStack>
             <FormControl
               display="flex"
               justifyContent="start"
               alignItems="center"
             >
-              <FormLabel htmlFor="encrypted" pt={2}>
-                Autostart
-              </FormLabel>
+              <FormLabel pt={2}>Autostart</FormLabel>
               <Checkbox {...register(`electionType.autoStart`)} />
             </FormControl>
             <FormControl
@@ -34,9 +33,7 @@ const CreateElectionOptions = () => {
               justifyContent="start"
               alignItems="center"
             >
-              <FormLabel htmlFor="encrypted" pt={2}>
-                Encrypted
-              </FormLabel>
+              <FormLabel pt={2}>Encrypted</FormLabel>
               <Checkbox {...register(`electionType.interruptible`)} />
             </FormControl>
             <FormControl
@@ -44,9 +41,7 @@ const CreateElectionOptions = () => {
               justifyContent="start"
               alignItems="center"
             >
-              <FormLabel htmlFor="encrypted" pt={2}>
-                Secret until the end
-              </FormLabel>
+              <FormLabel pt={2}>Secret until the end</FormLabel>
               <Checkbox {...register(`electionType.secretUntilTheEnd`)} />
             </FormControl>
           </HStack>
