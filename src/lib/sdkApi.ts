@@ -36,10 +36,12 @@ export const getPlainCensus = async (addresses: string[]) => {
 export const getWeightedCensus = async (addresses: any) => {
   const census = new WeightedCensus();
 
-  addresses.map((ad: any) => ({
+  const addressesFormatted = addresses.map((ad: any) => ({
     key: ad.address,
     weight: ad.weight,
   }));
+
+  census.add(addressesFormatted);
 
   return census;
 };

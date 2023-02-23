@@ -4,13 +4,13 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useAccount, useSigner } from 'wagmi';
 import {
   getClient,
-  getPlainCensus,
+  getWeightedCensus,
   handlerCreateElection,
   updateBalance,
 } from '../../lib/sdkApi';
-import CreateElectionOptions from './CreateElectionOptions';
 import CreateProcessAddresses from './CreateProcessAddresses';
 import CreateProcessHeader from './CreateProcessHeader';
+import CreateProcessOptions from './CreateProcessOptions';
 import CreateProcessQuestions from './CreateProcessQuestions';
 
 type FormValues = {
@@ -80,8 +80,6 @@ const CreateProcess = () => {
     handleSubmit(data, signer, setIsLoading);
   };
 
-  // console.log('hello');
-
   return (
     <FormProvider {...methods}>
       <Flex
@@ -96,7 +94,7 @@ const CreateProcess = () => {
         onSubmit={methods.handleSubmit(onSubmit)}
       >
         <CreateProcessHeader />
-        <CreateElectionOptions />
+        <CreateProcessOptions />
         <CreateProcessAddresses />
         <CreateProcessQuestions />
         <Button type="submit">
@@ -116,9 +114,16 @@ const handleSubmit = async (
   const client = getClient(signer);
   try {
     updateBalance(client);
-    const addresses = data.addresses.map((add) => add.address);
 
-    const census = await getPlainCensus(addresses);
+    let census;
+
+    // if (data.weightedVote) census = await getWeightedCensus(data.addresses);
+    // else {
+    //   const addresses = data.addresses.map((add) => add.address);
+    //   census = await getPlainCensus(addresses);
+    // }
+    
+    census = await getWeightedCensus(data.addresses);
 
     const id = await handlerCreateElection(data, census, client);
 

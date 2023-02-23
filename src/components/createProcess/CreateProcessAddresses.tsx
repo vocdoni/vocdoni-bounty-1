@@ -12,7 +12,7 @@ import {
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 const CreateProcessAddresses = () => {
-  const { register } = useFormContext();
+  const { register, getValues } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     name: 'addresses',
   });
@@ -35,8 +35,16 @@ const CreateProcessAddresses = () => {
         {fields.map((add, i) => (
           <FormControl key={add.id} mb={4}>
             <Flex alignItems="center">
-              <FormLabel>{`Address ${i + 1}`}</FormLabel>
-
+              <FormLabel whiteSpace="nowrap">{`Address ${i + 1}`}</FormLabel>
+              {getValues().weightedVote && (
+                <FormControl display="flex" alignItems="end" mb={2} ml={8}>
+                  <FormLabel>Weight:</FormLabel>
+                  <Input
+                    width={24}
+                    {...register(`addresses.${i}.weight` as const)}
+                  />
+                </FormControl>
+              )}
               <IconButton
                 ml="auto"
                 type="button"

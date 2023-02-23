@@ -14,17 +14,15 @@ import {
 } from '@chakra-ui/react';
 import { useFormContext, useWatch } from 'react-hook-form';
 
-const CreateElectionOptions = () => {
+const CreateProcessOptions = () => {
   const { register, getValues, watch } = useFormContext();
   // watch rerenders all the form
   watch('weightedVote');
 
   // useWatch rerenders the component
   useWatch({
-    name: ['weightedVote'],
+    name: ['electionType'],
   });
-
-  console.log('aa');
 
   return (
     <Box p={4} bg="gray.100" borderRadius={8}>
@@ -118,4 +116,4 @@ const CreateElectionOptions = () => {
   );
 };
 
-export default CreateElectionOptions;
+export default CreateProcessOptions;
