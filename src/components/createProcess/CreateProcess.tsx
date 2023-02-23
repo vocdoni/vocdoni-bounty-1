@@ -16,11 +16,17 @@ import CreateProcessQuestions from './CreateProcessQuestions';
 type FormValues = {
   titleProcess: string;
   descriptionProcess: string;
+  dates: {
+    start: any;
+    end: any;
+  };
   electionType: {
     autoStart: boolean;
     interruptible: boolean;
     secretUntilTheEnd: boolean;
   };
+  maxTimesOverwrite: number;
+  weightedVote: boolean;
   addresses: {
     address: string;
     weight: number;
@@ -45,11 +51,17 @@ const CreateProcess = () => {
     defaultValues: {
       titleProcess: '',
       descriptionProcess: '',
+      dates: {
+        start: undefined,
+        end: undefined,
+      },
       electionType: {
         autoStart: true,
         interruptible: true,
         secretUntilTheEnd: true,
       },
+      maxTimesOverwrite: 0,
+      weightedVote: false,
       addresses: [
         { address, weight: 0 },
         { address: '', weight: 0 },
@@ -66,6 +78,7 @@ const CreateProcess = () => {
 
   const onSubmit = (data: any) => handleSubmit(data, signer, setIsLoading);
 
+  // console.log(methods.watch());
   return (
     <FormProvider {...methods}>
       <Flex
