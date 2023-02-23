@@ -98,7 +98,7 @@ const CreateProcess = () => {
         <CreateProcessOptions />
         <CreateProcessAddresses />
         <CreateProcessQuestions />
-        <Button type="submit">
+        <Button type="submit" _dark={{ bg: ' #0f141c' }}>
           {isLoading ? <Spinner width="20px" height="20px" /> : 'Submit'}
         </Button>
       </Flex>

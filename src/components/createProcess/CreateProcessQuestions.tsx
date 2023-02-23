@@ -16,8 +16,15 @@ const CreateProcessQuestions = () => {
       p={4}
       bg="gray.100"
       borderRadius={8}
+      _dark={{ bg: ' #0f141c' }}
     >
-      <HStack justifyContent="space-between" bg="white" p={4} borderRadius={8}>
+      <HStack
+        justifyContent="space-between"
+        bg="white"
+        p={4}
+        borderRadius={8}
+        _dark={{ bg: '#1A202C' }}
+      >
         <Text as="legend" fontSize="1.3em">
           Questions
         </Text>
