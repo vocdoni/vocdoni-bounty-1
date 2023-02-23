@@ -7,11 +7,11 @@ import {
   InputLeftElement,
 } from '@chakra-ui/react';
 
-interface props {
-  setSearch: any;
+interface Props {
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const ProcessesListFilters = ({ setSearch }: props) => {
+const ProcessesListFilters = ({ setSearch }: Props) => {
   return (
     <Flex
       as="fieldset"

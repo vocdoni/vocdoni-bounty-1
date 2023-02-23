@@ -19,11 +19,7 @@ const router = createBrowserRouter(
       <Route element={<ProtectedRoutes />}>
         <Route path="createprocess" element={<Create />} />
         <Route path="processeslist" element={<List />} />
-        <Route
-          path="process/:id"
-          element={<Process />}
-          loader={getProcessInfo}
-        />
+        <Route path=":id" element={<Process />} loader={getProcessInfo} />
       </Route>
 
       <Route path="*" element={<NotFound />} />

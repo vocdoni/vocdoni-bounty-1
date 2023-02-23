@@ -12,11 +12,11 @@ import { FaPause, FaPlay, FaStop } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import ProcessListInfoModal from './ProcessListInfoModal';
 
-interface props {
+interface Props {
   el: any;
 }
 
-const ProcessListRow = ({ el }: props) => {
+const ProcessListRow = ({ el }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   // const { client } = useClientContext();
 
@@ -34,7 +34,7 @@ const ProcessListRow = ({ el }: props) => {
         _dark={{ boxShadow: '0px 0px 8px 2px #333f57' }}
       >
         <Box isTruncated flex="1 1 auto" cursor="pointer">
-          <Link to={`/process/${el.raw.electionId}`}>
+          <Link to={`/${el.raw.electionId}`}>
             <Text width="100%" isTruncated title={el.title.default}>
               {el.title.default}
             </Text>

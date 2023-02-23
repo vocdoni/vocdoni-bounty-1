@@ -15,6 +15,7 @@
     "@types/node": "^12.0.0",
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.4",
+    "@types/react-router-dom": "^5.3.3",
     "@vocdoni/react-components": "/Users/gerard/Desktop/v/others/ui-components/packages/components/vocdoni-react-components-v0.0.2.tgz",
     "@vocdoni/sdk": "^0.0.3-alpha",
     "ethers": "^5.7.2",

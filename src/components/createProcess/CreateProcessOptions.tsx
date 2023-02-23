@@ -111,7 +111,11 @@ const CreateProcessOptions = () => {
                     <FormLabel pt={2} whiteSpace="nowrap">
                       Max Vote Overwrites
                     </FormLabel>
-                    <Input {...register(`maxVotesOverwrite`)} width={20} />
+                    <Input
+                      type="number"
+                      {...register(`maxVoteOverwrites`)}
+                      width={20}
+                    />
                   </FormControl>
                 </Flex>
               </AccordionPanel>

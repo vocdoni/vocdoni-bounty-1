@@ -5,6 +5,7 @@ import { useAccount, useSigner } from 'wagmi';
 import {
   getClient,
   getPlainCensus,
+  getWeightedCensus,
   handlerCreateElection,
   updateBalance,
 } from '../../lib/sdkApi';
@@ -13,7 +14,7 @@ import CreateProcessHeader from './CreateProcessHeader';
 import CreateProcessOptions from './CreateProcessOptions';
 import CreateProcessQuestions from './CreateProcessQuestions';
 
-type FormValues = {
+export interface FormValues {
   titleProcess: string;
   descriptionProcess: string;
   dates: {
@@ -25,24 +26,27 @@ type FormValues = {
     interruptible: boolean;
     secretUntilTheEnd: boolean;
   };
-  maxTimesOverwrite: number;
+  maxVoteOverwrites: number;
   weightedVote: boolean;
-  addresses: {
-    address: string;
-    weight: number;
+  addresses: Addresses[];
+  questions: Questions[];
+}
+
+export interface Questions {
+  titleQuestion: string;
+  descriptionQuestion: string;
+  options: {
+    option: string;
   }[];
-  questions: {
-    titleQuestion: string;
-    descriptionQuestion: string;
-    options: {
-      option: string;
-    }[];
-  }[];
-};
+}
+
+export interface Addresses {
+  address: string;
+  weight: number;
+}
 
 const CreateProcess = () => {
   const { address } = useAccount();
-  // const { client } = useClientContext();
 
   const { data: signer } = useSigner();
 
@@ -61,7 +65,7 @@ const CreateProcess = () => {
         interruptible: true,
         secretUntilTheEnd: true,
       },
-      maxTimesOverwrite: 0,
+      maxVoteOverwrites: 0,
       weightedVote: false,
       addresses: [
         { address, weight: 0 },
@@ -77,7 +81,7 @@ const CreateProcess = () => {
     },
   });
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: FormValues) => {
     handleSubmit(data, signer, setIsLoading);
   };
 
@@ -109,7 +113,7 @@ const CreateProcess = () => {
 const handleSubmit = async (
   data: FormValues,
   signer: any,
-  setIsLoading: any
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   setIsLoading(true);
   const client = getClient(signer);
@@ -118,14 +122,14 @@ const handleSubmit = async (
 
     let census;
 
-    // if (data.weightedVote) census = await getWeightedCensus(data.addresses);
-    // else {
-    //   const addresses = data.addresses.map((add) => add.address);
-    //   census = await getPlainCensus(addresses);
-    // }
+    if (data.weightedVote) census = await getWeightedCensus(data.addresses);
+    else {
+      const addresses = data.addresses.map((add) => add.address);
+      census = await getPlainCensus(addresses);
+    }
 
-    const addresses = data.addresses.map((add) => add.address);
-    census = await getPlainCensus(addresses);
+    // const addresses = data.addresses.map((add) => add.address);
+    // census = await getPlainCensus(addresses);
 
     const id = await handlerCreateElection(data, census, client);
 

@@ -10,16 +10,11 @@ import {
 } from '@chakra-ui/react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
-interface props {
-  question: {
-    titleQuestion: string;
-    descriptionQuestion: string;
-    options: string[];
-  };
+interface Props {
   index: number;
   remove: () => void;
 }
-const CreateProcessQuestion = ({ index, remove }: props) => {
+const CreateProcessQuestion = ({ index, remove }: Props) => {
   const { register } = useFormContext();
   const {
     fields,
@@ -28,6 +23,28 @@ const CreateProcessQuestion = ({ index, remove }: props) => {
   } = useFieldArray({
     name: `questions.${index}.options`,
   });
+
+  const getOptions = (): JSX.Element[] => {
+    return fields.map((_, idx: number) => (
+      <FormControl key={idx} mb={4}>
+        <Flex alignItems="center">
+          <FormLabel>Option {idx + 1}</FormLabel>
+
+          <IconButton
+            ml="auto"
+            type="button"
+            icon={<DeleteIcon />}
+            aria-label="delete option"
+            onClick={() => removeOption(idx)}
+          />
+        </Flex>
+        <Input
+          {...register(`questions.${index}.options.${idx}.option` as const)}
+          placeholder={`Option ${idx + 1}`}
+        />
+      </FormControl>
+    ));
+  };
 
   return (
     <Box bg="white" p={4} borderRadius={8} _dark={{ bg: '#1A202C' }}>
@@ -64,25 +81,7 @@ const CreateProcessQuestion = ({ index, remove }: props) => {
           onClick={() => append({ option: '' })}
         />
       </HStack>
-      {fields.map((_, idx: number) => (
-        <FormControl key={idx} mb={4}>
-          <Flex alignItems="center">
-            <FormLabel>Option {idx + 1}</FormLabel>
-
-            <IconButton
-              ml="auto"
-              type="button"
-              icon={<DeleteIcon />}
-              aria-label="delete option"
-              onClick={() => removeOption(idx)}
-            />
-          </Flex>
-          <Input
-            {...register(`questions.${index}.options.${idx}.option` as const)}
-            placeholder={`Option ${idx + 1}`}
-          />
-        </FormControl>
-      ))}
+      {getOptions()}
     </Box>
   );
 };

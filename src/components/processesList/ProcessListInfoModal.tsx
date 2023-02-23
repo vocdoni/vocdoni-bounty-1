@@ -11,13 +11,13 @@ import {
 import { Link } from 'react-router-dom';
 import { formatDate } from './ProcessListRow';
 
-interface props {
+interface Props {
   el: any;
-  isOpen: any;
+  isOpen: boolean;
   onClose: () => void;
 }
 
-const ProcessListInfoModal = ({ el, isOpen, onClose }: props) => (
+const ProcessListInfoModal = ({ el, isOpen, onClose }: Props) => (
   <Modal isOpen={isOpen} onClose={onClose}>
     <ModalOverlay />
     <ModalContent>
@@ -29,7 +29,7 @@ const ProcessListInfoModal = ({ el, isOpen, onClose }: props) => (
           <Text>Start date: {formatDate(el.startDate)}</Text>
           <Text>End date: {formatDate(el.endDate)}</Text>
           <Button alignSelf="center" mt={4}>
-            <Link to={`/process/${el.raw.electionId}`}>More info</Link>
+            <Link to={`/${el.raw.electionId}`}>More info</Link>
           </Button>
         </Flex>
       </ModalBody>

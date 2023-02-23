@@ -5,11 +5,11 @@ import {
   ElectionTitle,
 } from '@vocdoni/react-components';
 
-interface props {
+interface Props {
   id: any;
 }
 
-const ProcessElection = ({ id }: props) => {
+const ProcessElection: React.FC<Props> = ({ id }) => {
   return (
     <>
       <ElectionProvider id={id}>

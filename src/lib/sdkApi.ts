@@ -5,6 +5,11 @@ import {
   VocdoniSDKClient,
   WeightedCensus,
 } from '@vocdoni/sdk';
+import {
+  Addresses,
+  FormValues,
+  Questions,
+} from '../components/createProcess/CreateProcess';
 
 export const getClient = (singer: any) =>
   new VocdoniSDKClient({
@@ -33,20 +38,27 @@ export const getPlainCensus = async (addresses: string[]) => {
 
   return census;
 };
-export const getWeightedCensus = async (addresses: any) => {
+export const getWeightedCensus = async (addresses: Addresses[]) => {
   const census = new WeightedCensus();
 
-  const addressesFormatted = addresses.map((ad: any) => ({
-    key: ad.address,
-    weight: ad.weight,
-  }));
+  // const addressesFormatted = addresses.map((ad: any) => ({
+  //   key: ad.address,
+  //   weight: ad.weight,
+  // }));
 
-  census.add(addressesFormatted);
+  // census.add(addressesFormatted);
+
+  addresses.forEach((add: any) => {
+    census.add({
+      key: add.address,
+      weight: BigInt(add.weight),
+    });
+  });
 
   return census;
 };
 
-const addQuestions = (election: any, questions: any) => {
+const addQuestions = (election: any, questions: Questions[]) => {
   const questionsFormatted = questions.map((question: any) => ({
     title: question.title,
     description: question.description,
@@ -62,7 +74,7 @@ const addQuestions = (election: any, questions: any) => {
 };
 
 export const handlerCreateElection = async (
-  formValues: any,
+  formValues: FormValues,
   census: any,
   client: any
 ) => {
@@ -77,14 +89,14 @@ export const handlerCreateElection = async (
     description: formValues.descriptionProcess,
     header: 'https://source.unsplash.com/random',
     streamUri: 'https://source.unsplash.com/random',
-    startDate: formValues.electionType.autostart
+    startDate: formValues.electionType.autoStart
       ? undefined
       : startDate.getTime(),
     endDate: endDate.getTime(),
     electionType: {
-      autoStart: formValues.electionType.autostart,
+      autoStart: formValues.electionType.autoStart,
       interruptible: formValues.electionType.interruptible,
-      secretUntilTheEnd: formValues.electionType.encrypted,
+      secretUntilTheEnd: formValues.electionType.secretUntilTheEnd,
     },
     voteType: { maxVoteOverwrites: Number(formValues.maxVoteOverwrites) },
     census,
