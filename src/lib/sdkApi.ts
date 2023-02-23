@@ -64,22 +64,27 @@ export const handlerCreateElection = async (
   census: any,
   client: any
 ) => {
-  const endDate = new Date();
-  endDate.setHours(endDate.getHours() + 10);
+  const startDate = new Date(formValues.dates.start);
+  startDate.setHours(startDate.getHours());
+
+  const endDate = new Date(formValues.dates.end);
+  endDate.setHours(endDate.getHours());
 
   const election = Election.from({
     title: formValues.titleProcess,
     description: formValues.descriptionProcess,
     header: 'https://source.unsplash.com/random',
     streamUri: 'https://source.unsplash.com/random',
+    startDate: formValues.electionType.autostart
+      ? undefined
+      : startDate.getTime(),
     endDate: endDate.getTime(),
     electionType: {
       autoStart: formValues.electionType.autostart,
       interruptible: formValues.electionType.interruptible,
       secretUntilTheEnd: formValues.electionType.encrypted,
     },
-
-    // voteType: { maxVoteOverwrites: Number(formValues.maxVoteOverwrites.times) },
+    voteType: { maxVoteOverwrites: Number(formValues.maxVoteOverwrites) },
     census,
   });
   addQuestions(election, formValues.questions);

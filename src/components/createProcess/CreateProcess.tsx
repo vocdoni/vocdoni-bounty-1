@@ -76,9 +76,12 @@ const CreateProcess = () => {
     },
   });
 
-  const onSubmit = (data: any) => handleSubmit(data, signer, setIsLoading);
+  const onSubmit = (data: any) => {
+    handleSubmit(data, signer, setIsLoading);
+  };
 
-  // console.log(methods.watch());
+  console.log(methods.watch());
+
   return (
     <FormProvider {...methods}>
       <Flex
