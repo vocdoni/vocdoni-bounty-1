@@ -9,6 +9,7 @@ import RootLayout from '../layouts/RootLayout';
 import Create from '../pages/Create';
 import Home from '../pages/Home';
 import List from '../pages/List';
+import NotFound from '../pages/NotFound';
 import Process, { getProcessInfo } from '../pages/Process';
 
 const router = createBrowserRouter(
@@ -25,7 +26,7 @@ const router = createBrowserRouter(
         />
       </Route>
 
-      <Route path="*" element={null} />
+      <Route path="*" element={<NotFound />} />
     </Route>
   )
 );
