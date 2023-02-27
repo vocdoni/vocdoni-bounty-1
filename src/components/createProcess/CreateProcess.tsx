@@ -11,8 +11,8 @@ import {
 } from '../../lib/sdkApi';
 import CreateProcessAddresses from './CreateProcessAddresses';
 import CreateProcessHeader from './CreateProcessHeader';
-import CreateProcessOptions from './CreateProcessOptions';
 import CreateProcessQuestions from './CreateProcessQuestions';
+import CreateProcessSettings from './CreateProcessSettings';
 
 export interface FormValues {
   titleProcess: string;
@@ -99,7 +99,7 @@ const CreateProcess = () => {
         onSubmit={methods.handleSubmit(onSubmit)}
       >
         <CreateProcessHeader />
-        <CreateProcessOptions />
+        <CreateProcessSettings />
         <CreateProcessAddresses />
         <CreateProcessQuestions />
         <Button type="submit" _dark={{ bg: ' #0f141c' }}>
@@ -127,9 +127,6 @@ const handleSubmit = async (
       const addresses = data.addresses.map((add) => add.address);
       census = await getPlainCensus(addresses);
     }
-
-    // const addresses = data.addresses.map((add) => add.address);
-    // census = await getPlainCensus(addresses);
 
     const id = await handlerCreateElection(data, census, client);
 
