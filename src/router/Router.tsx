@@ -4,13 +4,13 @@ import {
   Route,
 } from 'react-router-dom';
 
-import ProtectedRoutes from '../components/ProtectedRoutes';
-import RootLayout from '../layouts/RootLayout';
-import Create from '../pages/Create';
-import Home from '../pages/Home';
-import List from '../pages/List';
-import NotFound from '../pages/NotFound';
-import Process, { getProcessInfo } from '../pages/Process';
+import ProtectedRoutes from '../components/layouts/ProtectedRoutes';
+import Create from '../elements/Create';
+import Home from '../elements/Home';
+import List from '../elements/List';
+import NotFound from '../elements/NotFound';
+import Process, { getProcessInfo } from '../elements/Process';
+import RootLayout from '../elements/RootLayout';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
