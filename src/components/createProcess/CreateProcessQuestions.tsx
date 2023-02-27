@@ -8,16 +8,6 @@ const CreateProcessQuestions = () => {
     name: 'questions',
   });
 
-  const getQuestions = (): JSX.Element[] => {
-    return fields.map((question: any, index) => (
-      <CreateProcessQuestion
-        key={question.id}
-        index={index}
-        remove={() => remove(index)}
-      />
-    ));
-  };
-
   return (
     <Flex
       as="fieldset"
@@ -51,7 +41,13 @@ const CreateProcessQuestions = () => {
           }
         />
       </HStack>
-      {getQuestions()}
+      {fields.map((question: any, index) => (
+        <CreateProcessQuestion
+          key={question.id}
+          index={index}
+          remove={() => remove(index)}
+        />
+      ))}
     </Flex>
   );
 };

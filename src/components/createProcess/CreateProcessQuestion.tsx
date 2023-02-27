@@ -1,7 +1,6 @@
-import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
+import { DeleteIcon } from '@chakra-ui/icons';
 import {
   Box,
-  Flex,
   FormControl,
   FormLabel,
   HStack,
@@ -9,6 +8,7 @@ import {
   Input,
 } from '@chakra-ui/react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
+import CreateProcessQuestionOptions from './CreateProcessQuestionOptions';
 
 interface Props {
   index: number;
@@ -18,33 +18,11 @@ const CreateProcessQuestion = ({ index, remove }: Props) => {
   const { register } = useFormContext();
   const {
     fields,
-    append,
+    append: appendOption,
     remove: removeOption,
   } = useFieldArray({
     name: `questions.${index}.options`,
   });
-
-  const getOptions = (): JSX.Element[] => {
-    return fields.map((_, idx: number) => (
-      <FormControl key={idx} mb={4}>
-        <Flex alignItems="center">
-          <FormLabel>Option {idx + 1}</FormLabel>
-
-          <IconButton
-            ml="auto"
-            type="button"
-            icon={<DeleteIcon />}
-            aria-label="delete option"
-            onClick={() => removeOption(idx)}
-          />
-        </Flex>
-        <Input
-          {...register(`questions.${index}.options.${idx}.option` as const)}
-          placeholder={`Option ${idx + 1}`}
-        />
-      </FormControl>
-    ));
-  };
 
   return (
     <Box bg="white" p={4} borderRadius={8} _dark={{ bg: '#1A202C' }}>
@@ -72,16 +50,14 @@ const CreateProcessQuestion = ({ index, remove }: Props) => {
           placeholder="Description"
         />
       </FormControl>
-      <HStack justifyContent="space-between" mb={4} mt={8}>
-        <FormLabel>Options</FormLabel>
-        <IconButton
-          type="button"
-          icon={<AddIcon />}
-          aria-label="Add option"
-          onClick={() => append({ option: '' })}
-        />
-      </HStack>
-      {getOptions()}
+
+      <CreateProcessQuestionOptions
+        fields={fields}
+        register={register}
+        removeOption={removeOption}
+        appendOption={appendOption}
+        index={index}
+      />
     </Box>
   );
 };
