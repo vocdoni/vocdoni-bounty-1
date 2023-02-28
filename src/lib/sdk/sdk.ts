@@ -9,7 +9,7 @@ import {
   Addresses,
   FormValues,
   Questions,
-} from '../../components/createProcess/CreateProcess';
+} from '../../components/CreateProcess';
 
 export const getClient = (singer: any) =>
   new VocdoniSDKClient({

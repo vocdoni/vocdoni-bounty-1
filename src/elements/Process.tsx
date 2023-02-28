@@ -1,5 +1,5 @@
 import { LoaderFunctionArgs, useLoaderData } from 'react-router-dom';
-import ProcessElection from '../components/processElection/ProcessElection';
+import ProcessElection from '../components/ProcessElection';
 
 const Process = () => {
   let id = useLoaderData();

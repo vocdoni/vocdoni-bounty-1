@@ -1,4 +1,4 @@
-import ProcessesList from '../components/processesList/ProcessesList';
+import ProcessesList from '../components/ProcessesList';
 
 const List = () => {
   return <ProcessesList />;

@@ -2,7 +2,7 @@ import { Box, Flex } from '@chakra-ui/react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { NavLink } from 'react-router-dom';
 import { ColorModeSwitcher } from '../../ColorModeSwitcher';
-import VocdoniIcon from '../icons/VocdoniIcon';
+import VocdoniIcon from '../Icons/VocdoniIcon';
 
 const Navbar = () => {
   return (

@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 import { PublishedElection } from '@vocdoni/sdk';
 import { Link } from 'react-router-dom';
-import { formatDate } from './ProcessListRow';
+import { formatDate } from '../../lib/processList/formatDate';
 
 interface Props {
   el: PublishedElection;

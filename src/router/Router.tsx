@@ -4,7 +4,7 @@ import {
   Route,
 } from 'react-router-dom';
 
-import ProtectedRoutes from '../components/layouts/ProtectedRoutes';
+import ProtectedRoutes from '../components/Layouts/ProtectedRoutes';
 import Create from '../elements/Create';
 import Home from '../elements/Home';
 import List from '../elements/List';
