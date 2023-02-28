@@ -11,6 +11,7 @@ import {
 import { PublishedElection } from '@vocdoni/sdk';
 import { Link } from 'react-router-dom';
 import { formatDate } from '../../lib/processList/formatDate';
+import { getStatusElectionName } from '../../lib/processList/statusElection';
 
 interface Props {
   el: PublishedElection;
@@ -25,7 +26,7 @@ const ProcessListInfoModal = ({ el, isOpen, onClose }: Props) => (
       <ModalCloseButton />
       <ModalBody>
         <Flex direction="column" gap={4} p={4}>
-          <Text>State: {el.status.toLowerCase()}</Text>
+          <Text>State: {getStatusElectionName(el.status)}</Text>
           <Text>Creation date: {formatDate(el.creationTime)}</Text>
           <Text>Start date: {formatDate(el.startDate)}</Text>
           <Text>End date: {formatDate(el.endDate)}</Text>

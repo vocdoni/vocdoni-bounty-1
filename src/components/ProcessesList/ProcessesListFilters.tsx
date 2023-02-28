@@ -1,21 +1,21 @@
 import { SearchIcon } from '@chakra-ui/icons';
 import {
+  Checkbox,
   Flex,
   FormControl,
+  FormLabel,
   Input,
   InputGroup,
   InputLeftElement,
 } from '@chakra-ui/react';
+import { useFormContext } from 'react-hook-form';
 
-interface Props {
-  setSearch: React.Dispatch<React.SetStateAction<string>>;
-}
-
-const ProcessesListFilters = ({ setSearch }: Props) => {
+const ProcessesListFilters = () => {
+  const { register } = useFormContext();
   return (
     <Flex
       as="fieldset"
-      direction="column"
+      direction={{ base: 'column', md: 'row' }}
       gap={4}
       m="16px auto"
       p={4}
@@ -36,9 +36,15 @@ const ProcessesListFilters = ({ setSearch }: Props) => {
             placeholder="Search by title"
             pl={10}
             borderRadius={10}
-            onChange={(e) => setSearch(e.target.value)}
+            {...register('search')}
           />
         </InputGroup>
+      </FormControl>
+      <FormControl display="flex" alignItems="center" width="auto">
+        <FormLabel pt={2} whiteSpace="nowrap">
+          Only active elections
+        </FormLabel>
+        <Checkbox {...register(`onlyCurrentElections`)} />
       </FormControl>
     </Flex>
   );

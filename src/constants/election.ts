@@ -1,9 +1,9 @@
 export const ELECTION_STATUS = {
-  RESULTS: 'RESULTS',
-  CANCELED: 'CANCELED',
-  ENDED: 'ENDED',
-  READY: 'READY',
-  PAUSED: 'PAUSED',
+  READY: 1,
+  PAUSED: 2,
+  CANCELED: 3,
+  ENDED: 4,
+  RESULTS: 5,
 };
 
 export const ELECTION_ACTION = {

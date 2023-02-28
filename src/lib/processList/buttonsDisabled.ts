@@ -1,5 +1,4 @@
-import { ELECTION_ACTION, ELECTION_STATUS } from '../../constants/election';
-import { getClient, updateBalance } from '../sdk/sdk';
+import { ELECTION_STATUS } from '../../constants/election';
 
 interface PropsButtonsDisabled {
   allDisabled: boolean;
@@ -15,11 +14,11 @@ export const getButtonsDisabled = (el: any) => {
   const buttonsDisabled: PropsButtonsDisabled = {
     allDisabled:
       !isStarted ||
-      el.raw.status === ELECTION_STATUS.RESULTS ||
-      el.raw.status === ELECTION_STATUS.CANCELED ||
-      el.raw.status === ELECTION_STATUS.ENDED,
-    readyDisabled: el.raw.status === ELECTION_STATUS.READY,
-    pauseDisabled: el.raw.status === ELECTION_STATUS.PAUSED,
+      el.status === ELECTION_STATUS.RESULTS ||
+      el.status === ELECTION_STATUS.CANCELED ||
+      el.status === ELECTION_STATUS.ENDED,
+    readyDisabled: el.status === ELECTION_STATUS.READY,
+    pauseDisabled: el.status === ELECTION_STATUS.PAUSED,
   };
 
   return buttonsDisabled;

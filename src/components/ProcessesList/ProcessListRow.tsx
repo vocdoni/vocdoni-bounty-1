@@ -46,6 +46,4 @@ const ProcessListRow = ({ el, setElectionsList }: Props) => {
   );
 };
 
-
-
 export default ProcessListRow;
