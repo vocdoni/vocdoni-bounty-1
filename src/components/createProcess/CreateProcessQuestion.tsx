@@ -7,12 +7,16 @@ import {
   IconButton,
   Input,
 } from '@chakra-ui/react';
-import { useFieldArray, useFormContext } from 'react-hook-form';
+import {
+  useFieldArray,
+  UseFieldArrayRemove,
+  useFormContext,
+} from 'react-hook-form';
 import CreateProcessQuestionOptions from './CreateProcessQuestionOptions';
 
 interface Props {
   index: number;
-  remove: () => void;
+  remove: UseFieldArrayRemove;
 }
 const CreateProcessQuestion = ({ index, remove }: Props) => {
   const { register } = useFormContext();
@@ -33,7 +37,7 @@ const CreateProcessQuestion = ({ index, remove }: Props) => {
           type="button"
           icon={<DeleteIcon />}
           aria-label={`Delete question ${index + 1}`}
-          onClick={remove}
+          onClick={() => remove()}
         />
       </HStack>
       <FormControl mb={4}>

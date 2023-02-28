@@ -6,7 +6,7 @@ import {
 } from '@rainbow-me/rainbowkit';
 import { RouterProvider } from 'react-router-dom';
 import { WagmiConfig } from 'wagmi';
-import { chains, wagmiClient } from './lib/rainbow';
+import { chains, wagmiClient } from './lib/processList/rainbow';
 import router from './router/Router';
 
 export const App = () => {

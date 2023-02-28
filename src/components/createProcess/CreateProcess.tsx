@@ -8,7 +8,7 @@ import {
   getWeightedCensus,
   handlerCreateElection,
   updateBalance,
-} from '../../lib/sdkApi';
+} from '../../lib/sdk/sdk';
 import CreateProcessAddresses from './CreateProcessAddresses';
 import CreateProcessHeader from './CreateProcessHeader';
 import CreateProcessQuestions from './CreateProcessQuestions';

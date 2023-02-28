@@ -1,5 +1,5 @@
 import {
-  createBrowserRouter,
+  createHashRouter,
   createRoutesFromElements,
   Route,
 } from 'react-router-dom';
@@ -12,7 +12,7 @@ import NotFound from '../elements/NotFound';
 import Process, { getProcessInfo } from '../elements/Process';
 import RootLayout from '../elements/RootLayout';
 
-const router = createBrowserRouter(
+const router = createHashRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
       <Route index element={<Home />} />

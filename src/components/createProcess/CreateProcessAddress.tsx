@@ -25,35 +25,37 @@ const CreateProcessAddress = ({
   getValues,
   register,
   remove,
-}: Props) => {
-  return fields.map((add: any, i: number) => (
-    <FormControl key={add.id} mb={4}>
-      <Flex alignItems="center">
-        <FormLabel whiteSpace="nowrap">{`Address ${i + 1}`}</FormLabel>
-        {getValues().weightedVote && (
-          <FormControl display="flex" alignItems="end" mb={2} ml={8}>
-            <FormLabel>Weight:</FormLabel>
-            <Input
-              type="number"
-              width={24}
-              {...register(`addresses.${i}.weight` as const)}
-            />
-          </FormControl>
-        )}
-        <IconButton
-          ml="auto"
-          type="button"
-          icon={<DeleteIcon />}
-          aria-label="delete address"
-          onClick={() => remove(i)}
+}: Props) => (
+  <>
+    {fields.map((add: any, i: number) => (
+      <FormControl key={add.id} mb={4}>
+        <Flex alignItems="center">
+          <FormLabel whiteSpace="nowrap">{`Address ${i + 1}`}</FormLabel>
+          {getValues().weightedVote && (
+            <FormControl display="flex" alignItems="end" mb={2} ml={8}>
+              <FormLabel>Weight:</FormLabel>
+              <Input
+                type="number"
+                width={24}
+                {...register(`addresses.${i}.weight` as const)}
+              />
+            </FormControl>
+          )}
+          <IconButton
+            ml="auto"
+            type="button"
+            icon={<DeleteIcon />}
+            aria-label="delete address"
+            onClick={() => remove(i)}
+          />
+        </Flex>
+        <Input
+          {...register(`addresses.${i}.address` as const)}
+          placeholder={`Address ${i + 1}`}
         />
-      </Flex>
-      <Input
-        {...register(`addresses.${i}.address` as const)}
-        placeholder={`Address ${i + 1}`}
-      />
-    </FormControl>
-  ));
-};
+      </FormControl>
+    ))}
+  </>
+);
 
 export default CreateProcessAddress;

@@ -1,22 +1,15 @@
-import { InfoIcon } from '@chakra-ui/icons';
-import {
-  Box,
-  ButtonGroup,
-  Flex,
-  HStack,
-  IconButton,
-  Text,
-  useDisclosure,
-} from '@chakra-ui/react';
-import { FaPause, FaPlay, FaStop } from 'react-icons/fa';
+import { Box, Flex, Text, useDisclosure } from '@chakra-ui/react';
+import { PublishedElection } from '@vocdoni/sdk';
 import { Link } from 'react-router-dom';
+import ProcessListActionButtons from './ProcessListActionButtons';
 import ProcessListInfoModal from './ProcessListInfoModal';
 
 interface Props {
-  el: any;
+  el: PublishedElection;
+  setElectionsList: React.Dispatch<React.SetStateAction<any[]>>;
 }
 
-const ProcessListRow = ({ el }: Props) => {
+const ProcessListRow = ({ el, setElectionsList }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   // const { client } = useClientContext();
 
@@ -34,41 +27,20 @@ const ProcessListRow = ({ el }: Props) => {
         _dark={{ boxShadow: '0px 0px 8px 2px #333f57' }}
       >
         <Box isTruncated flex="1 1 auto" cursor="pointer">
-          <Link to={`/${el.raw.electionId}`}>
+          <Link to={`/${el.id}`}>
             <Text width="100%" isTruncated title={el.title.default}>
               {el.title.default}
             </Text>
-            <Text
-              width="100%"
-              color="gray.500"
-              isTruncated
-              title={el.raw.electionId}
-            >
-              {el.raw.electionId}
+            <Text width="100%" color="gray.500" isTruncated title={el.id}>
+              {el.id}
             </Text>
           </Link>
         </Box>
-        <HStack spacing={4} justifyContent="end" flex="0 0 160px">
-          <ButtonGroup size="sm" isAttached variant="outline">
-            <IconButton
-              aria-label="Search database"
-              icon={<FaPlay />}
-              onClick={() => console.log('play')}
-            />
-            <IconButton
-              aria-label="Search database"
-              icon={<FaPause />}
-              onClick={() => console.log('pause')}
-            />
-            <IconButton
-              aria-label="Search database"
-              icon={<FaStop />}
-              onClick={() => console.log('stop')}
-            />
-          </ButtonGroup>
-
-          <InfoIcon boxSize={6} cursor="pointer" onClick={onOpen} />
-        </HStack>
+        <ProcessListActionButtons
+          el={el}
+          setElectionsList={setElectionsList}
+          onOpen={onOpen}
+        />
       </Flex>
     </>
   );
