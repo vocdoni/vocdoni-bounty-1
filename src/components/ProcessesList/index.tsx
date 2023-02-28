@@ -53,7 +53,7 @@ const ProcessesList = () => {
   }, [signer, electionsList]);
 
   return (
-    <Box m="16px auto" p={4} width={{ base: '90%', lg: '650px' }}>
+    <Box m="16px auto" p={4} width={{ base: '97%', lg: '650px' }}>
       <FormProvider {...methodsFilters}>
         <ProcessesListFilters />
       </FormProvider>

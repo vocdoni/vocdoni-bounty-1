@@ -75,18 +75,16 @@ const CreateProcessAdvancedSettings = ({ register, getValues }: Props) => (
             <Checkbox {...register(`electionType.secretUntilTheEnd`)} />
           </FormControl>
         </Flex>
-        <Flex>
-          <FormControl display="flex" alignItems="center">
-            <FormLabel pt={2} whiteSpace="nowrap">
-              Max Vote Overwrites
-            </FormLabel>
-            <Input
-              type="number"
-              {...register(`maxVoteOverwrites`)}
-              width={20}
-            />
-          </FormControl>
-        </Flex>
+        <FormControl
+          display="flex"
+          flexDirection={{ base: 'column', md: 'row' }}
+          alignItems={{ base: 'start', md: 'center' }}
+        >
+          <FormLabel pt={2} whiteSpace="nowrap">
+            Max Vote Overwrites
+          </FormLabel>
+          <Input type="number" {...register(`maxVoteOverwrites`)} width={20} />
+        </FormControl>
       </AccordionPanel>
     </AccordionItem>
   </Accordion>

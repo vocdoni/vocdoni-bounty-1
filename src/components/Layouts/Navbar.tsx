@@ -141,12 +141,12 @@ const Navbar = () => {
             {isConnected && (
               <>
                 <ListItem listStyleType="none">
-                  <Button>
+                  <Button onClick={onClose}>
                     <NavLink to="createprocess">Create Process</NavLink>
                   </Button>
                 </ListItem>
                 <ListItem listStyleType="none">
-                  <Button>
+                  <Button onClick={onClose}>
                     <NavLink to="processeslist">Processes List</NavLink>
                   </Button>
                 </ListItem>

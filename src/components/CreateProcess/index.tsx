@@ -94,7 +94,7 @@ const CreateProcess = () => {
         m="16px auto"
         p={4}
         borderRadius={12}
-        width={{ base: '90%', lg: '650px' }}
+        width={{ base: '98%', lg: '650px' }}
         boxShadow="0px 0px 8px 2px rgba(69,69,69,0.3)"
         onSubmit={methods.handleSubmit(onSubmit)}
       >

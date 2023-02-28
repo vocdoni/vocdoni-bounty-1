@@ -22,7 +22,7 @@ interface Props {
 const ProcessListInfoModal = ({ el, isOpen, onClose }: Props) => (
   <Modal isOpen={isOpen} onClose={onClose}>
     <ModalOverlay />
-    <ModalContent>
+    <ModalContent width={{ sm: '97%', md: '80%', lg: '250px' }}>
       <ModalCloseButton />
       <ModalBody>
         <Flex direction="column" gap={4} p={4}>
