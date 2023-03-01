@@ -26,7 +26,7 @@ const ProcessListInfoModal = ({ el, isOpen, onClose }: Props) => (
       <ModalCloseButton />
       <ModalBody>
         <Flex direction="column" gap={4} p={4}>
-          <Text>State: {getStatusElectionName(el.status)}</Text>
+          <Text>{getStatusElectionName(el).toUpperCase()}</Text>
           <Text>Creation date: {formatDate(el.creationTime)}</Text>
           <Text>Start date: {formatDate(el.startDate)}</Text>
           <Text>End date: {formatDate(el.endDate)}</Text>

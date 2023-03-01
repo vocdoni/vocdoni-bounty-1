@@ -41,13 +41,6 @@ export const getPlainCensus = async (addresses: string[]) => {
 export const getWeightedCensus = async (addresses: Addresses[]) => {
   const census = new WeightedCensus();
 
-  // const addressesFormatted = addresses.map((ad: any) => ({
-  //   key: ad.address,
-  //   weight: ad.weight,
-  // }));
-
-  // census.add(addressesFormatted);
-
   addresses.forEach((add: any) => {
     census.add({
       key: add.address,
@@ -73,7 +66,7 @@ const addQuestions = (election: any, questions: Questions[]) => {
   );
 };
 
-export const handlerCreateElection = async (
+export const handleElection = async (
   formValues: FormValues,
   census: any,
   client: any
@@ -103,5 +96,6 @@ export const handlerCreateElection = async (
   });
   addQuestions(election, formValues.questions);
 
-  return await client.createElection(election);
+  // return await client.createElection(election);
+  return election;
 };

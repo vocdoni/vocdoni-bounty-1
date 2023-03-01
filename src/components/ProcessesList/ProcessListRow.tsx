@@ -11,7 +11,6 @@ interface Props {
 
 const ProcessListRow = ({ el, setElectionsList }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  // const { client } = useClientContext();
 
   return (
     <>

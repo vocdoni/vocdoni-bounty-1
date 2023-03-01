@@ -1,6 +1,5 @@
-import { PublishedElection } from '@vocdoni/sdk';
+import { ElectionStatus, PublishedElection } from '@vocdoni/sdk';
 import { PropsFilters } from '../../components/ProcessesList';
-import { ELECTION_STATUS } from '../../constants/election';
 
 const filterByActive = (
   elections: PublishedElection[],
@@ -13,9 +12,9 @@ const filterByActive = (
   return elections.filter(
     (el) =>
       now.getTime() < el.endDate.getTime() &&
-      el.status !== ELECTION_STATUS.CANCELED &&
-      el.status !== ELECTION_STATUS.ENDED &&
-      el.status !== ELECTION_STATUS.RESULTS
+      el.status !== ElectionStatus.CANCELED &&
+      el.status !== ElectionStatus.ENDED &&
+      el.status !== ElectionStatus.RESULTS
   );
 };
 

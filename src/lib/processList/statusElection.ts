@@ -1,11 +1,16 @@
-import { ELECTION_STATUS } from '../../constants/election';
+import { ElectionStatus, PublishedElection } from '@vocdoni/sdk';
 
-export const getStatusElectionName = (status: number) => {
-  if (status === ELECTION_STATUS.READY) return 'ready';
-  if (status === ELECTION_STATUS.PAUSED) return 'paused';
-  if (status === ELECTION_STATUS.CANCELED) return 'canceled';
-  if (status === ELECTION_STATUS.ENDED) return 'ended';
-  if (status === ELECTION_STATUS.RESULTS) return 'results';
+export const getStatusElectionName = (el: PublishedElection) => {
+  const now = new Date();
+
+  if (el.status === ElectionStatus.READY) {
+    if (now.getTime() < el.startDate.getTime()) return 'ready';
+    else return 'on going';
+  }
+  if (el.status === ElectionStatus.PAUSED) return 'paused';
+  if (el.status === ElectionStatus.CANCELED) return 'canceled';
+  if (el.status === ElectionStatus.ENDED) return 'ended';
+  if (el.status === ElectionStatus.RESULTS) return 'results';
 
   return 'undefined';
 };

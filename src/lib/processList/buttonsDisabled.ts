@@ -1,4 +1,4 @@
-import { ELECTION_STATUS } from '../../constants/election';
+import { ElectionStatus } from '@vocdoni/sdk';
 
 interface PropsButtonsDisabled {
   allDisabled: boolean;
@@ -14,11 +14,11 @@ export const getButtonsDisabled = (el: any) => {
   const buttonsDisabled: PropsButtonsDisabled = {
     allDisabled:
       !isStarted ||
-      el.status === ELECTION_STATUS.RESULTS ||
-      el.status === ELECTION_STATUS.CANCELED ||
-      el.status === ELECTION_STATUS.ENDED,
-    readyDisabled: el.status === ELECTION_STATUS.READY,
-    pauseDisabled: el.status === ELECTION_STATUS.PAUSED,
+      el.status === ElectionStatus.RESULTS ||
+      el.status === ElectionStatus.CANCELED ||
+      el.status === ElectionStatus.ENDED,
+    readyDisabled: el.status === ElectionStatus.READY,
+    pauseDisabled: el.status === ElectionStatus.PAUSED,
   };
 
   return buttonsDisabled;

@@ -1,10 +1,11 @@
 // @ts-nocheck
-import { ColorModeScript } from '@chakra-ui/react';
-import { ClientProvider } from '@vocdoni/react-components';
-import { EnvOptions } from '@vocdoni/sdk';
+import { ChakraProvider, extendTheme } from '@chakra-ui/react';
+import { theme } from '@vocdoni/react-components';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
+import { WagmiConfig } from 'wagmi';
 import { App } from './App';
+import { wagmiClient } from './lib/rainbow/rainbow';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
 
@@ -14,10 +15,11 @@ const root = ReactDOM.createRoot(container);
 
 root.render(
   <React.StrictMode>
-    <ColorModeScript />
-    <ClientProvider env={EnvOptions.DEV}>
-      <App />
-    </ClientProvider>
+    <ChakraProvider theme={extendTheme(theme)}>
+      <WagmiConfig client={wagmiClient}>
+        <App />
+      </WagmiConfig>
+    </ChakraProvider>
   </React.StrictMode>
 );
 

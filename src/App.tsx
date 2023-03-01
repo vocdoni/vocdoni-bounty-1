@@ -1,16 +1,18 @@
-import { ChakraProvider, extendTheme, useColorMode } from '@chakra-ui/react';
+import { ColorModeScript, useColorMode } from '@chakra-ui/react';
+import { Signer } from '@ethersproject/abstract-signer';
 import {
   darkTheme,
   lightTheme,
   RainbowKitProvider,
 } from '@rainbow-me/rainbowkit';
-import { theme } from '@vocdoni/react-components';
+import { ClientProvider } from '@vocdoni/react-components';
 import { RouterProvider } from 'react-router-dom';
-import { WagmiConfig } from 'wagmi';
-import { chains, wagmiClient } from './lib/rainbow/rainbow';
+import { useSigner } from 'wagmi';
+import { chains } from './lib/rainbow/rainbow';
 import router from './router/Router';
 
 export const App = () => {
+  const { data: signer } = useSigner();
   const { colorMode } = useColorMode();
 
   const rainbowStyles =
@@ -27,12 +29,11 @@ export const App = () => {
         });
 
   return (
-    <ChakraProvider theme={extendTheme(theme)}>
-      <WagmiConfig client={wagmiClient}>
-        <RainbowKitProvider chains={chains} theme={rainbowStyles}>
-          <RouterProvider router={router} />
-        </RainbowKitProvider>
-      </WagmiConfig>
-    </ChakraProvider>
+    <RainbowKitProvider chains={chains} theme={rainbowStyles}>
+      <ClientProvider env="dev" signer={signer as Signer}>
+        <ColorModeScript />
+        <RouterProvider router={router} />
+      </ClientProvider>
+    </RainbowKitProvider>
   );
 };

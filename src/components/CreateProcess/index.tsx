@@ -1,13 +1,12 @@
 import { Button, Flex, Spinner } from '@chakra-ui/react';
+import { useClientContext } from '@vocdoni/react-components';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useAccount, useSigner } from 'wagmi';
+import { useAccount } from 'wagmi';
 import {
-  getClient,
   getPlainCensus,
   getWeightedCensus,
-  handlerCreateElection,
-  updateBalance,
+  handleElection,
 } from '../../lib/sdk/sdk';
 import CreateProcessAddresses from './CreateProcessAddresses';
 import CreateProcessHeader from './CreateProcessHeader';
@@ -48,7 +47,7 @@ export interface Addresses {
 const CreateProcess = () => {
   const { address } = useAccount();
 
-  const { data: signer } = useSigner();
+  const { client, balance } = useClientContext();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -82,7 +81,7 @@ const CreateProcess = () => {
   });
 
   const onSubmit = (data: FormValues) => {
-    handleSubmit(data, signer, setIsLoading);
+    handleSubmit(data, client, balance, setIsLoading);
   };
 
   return (
@@ -112,13 +111,14 @@ const CreateProcess = () => {
 
 const handleSubmit = async (
   data: FormValues,
-  signer: any,
+  client: any,
+  balance: any,
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   setIsLoading(true);
-  const client = getClient(signer);
+
   try {
-    updateBalance(client);
+    if (balance < 20) await client.collectFaucetTokens();
 
     let census;
 
@@ -128,13 +128,15 @@ const handleSubmit = async (
       census = await getPlainCensus(addresses);
     }
 
-    const id = await handlerCreateElection(data, census, client);
+    const election = await handleElection(data, census, client);
+
+    const id = await client.createElection(election);
 
     console.log('id', id);
 
     const info = await client.fetchElection(id);
 
-    console.log('Process', info);
+    console.log(info);
   } catch (err: any) {
     console.log(err.message);
   } finally {
