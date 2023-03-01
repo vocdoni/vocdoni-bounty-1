@@ -82,11 +82,13 @@ const Navbar = () => {
           left={0}
           bg="white"
           _dark={{
-            bg: '#1A202C',
+            bg: 'black.c60',
+            borderBottomColor: 'black.c90',
           }}
           width="100%"
           zIndex={10}
-          boxShadow="0px 10px 12px 2px rgba(69,69,69,0.3)"
+          borderBottom="2px solid white"
+          borderBottomColor="gray.100"
         >
           <UnorderedList
             display="flex"

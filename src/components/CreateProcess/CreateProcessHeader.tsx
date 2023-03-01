@@ -1,18 +1,12 @@
-import { Box, FormControl, FormLabel, Input } from '@chakra-ui/react';
+import { FormControl, FormLabel, Input } from '@chakra-ui/react';
 import { useFormContext } from 'react-hook-form';
+import WrapperFormSection from '../Wrappers/WrapperFormSection';
 
 const CreateProcessHeader = () => {
   const { register } = useFormContext();
   return (
-    <Box p={4} bg="gray.100" borderRadius={8} _dark={{ bg: ' #0f141c' }}>
-      <Box
-        as="fieldset"
-        p={4}
-        pt={2}
-        borderRadius={8}
-        bg="white"
-        _dark={{ bg: '#1A202C' }}
-      >
+    <WrapperFormSection>
+      <>
         <FormControl mb={4}>
           <FormLabel fontSize="1.3em">Title</FormLabel>
           <Input {...register('titleProcess')} placeholder="Title" />
@@ -24,8 +18,8 @@ const CreateProcessHeader = () => {
             placeholder="Description"
           />
         </FormControl>
-      </Box>
-    </Box>
+      </>
+    </WrapperFormSection>
   );
 };
 

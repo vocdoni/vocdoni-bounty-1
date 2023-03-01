@@ -1,14 +1,15 @@
-import { Button, Flex, Spinner } from '@chakra-ui/react';
+import { Button, Spinner } from '@chakra-ui/react';
 import { useClientContext } from '@vocdoni/react-components';
+import { VocdoniSDKClient } from '@vocdoni/sdk';
 import { useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-import { useAccount } from 'wagmi';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import {
   addTokens,
   getPlainCensus,
   getWeightedCensus,
   handleElection,
 } from '../../lib/sdk/sdk';
+import WrapperForm from '../Wrappers/WrapperForm';
 import CreateProcessAddresses from './CreateProcessAddresses';
 import CreateProcessHeader from './CreateProcessHeader';
 import CreateProcessQuestions from './CreateProcessQuestions';
@@ -46,9 +47,7 @@ export interface Addresses {
 }
 
 const CreateProcess = () => {
-  const { address } = useAccount();
-
-  const { client, balance } = useClientContext();
+  const { client, balance, account } = useClientContext();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -68,7 +67,7 @@ const CreateProcess = () => {
       maxVoteOverwrites: 0,
       weightedVote: false,
       addresses: [
-        { address, weight: 0 },
+        { address: account?.address, weight: 0 },
         { address: '', weight: 0 },
       ],
       questions: [
@@ -80,54 +79,45 @@ const CreateProcess = () => {
       ],
     },
   });
-
-  const onSubmit = (data: FormValues) => {
-    handleSubmit(data, client, balance, setIsLoading);
+  const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
+    handleSubmitElec(data, client, balance, setIsLoading);
   };
 
   return (
     <FormProvider {...methods}>
-      <Flex
-        as="form"
-        direction="column"
-        gap={4}
-        m="16px auto"
-        p={4}
-        borderRadius={12}
-        width={{ base: '98%', lg: '650px' }}
-        boxShadow="0px 0px 8px 2px rgba(69,69,69,0.3)"
-        onSubmit={methods.handleSubmit(onSubmit)}
-      >
-        <CreateProcessHeader />
-        <CreateProcessSettings />
-        <CreateProcessAddresses />
-        <CreateProcessQuestions />
-        <Button
-          type="submit"
-          _dark={{ bg: ' #0f141c' }}
-          isDisabled={balance < 10 || isLoading}
-          _disabled={{
-            cursor: 'copy',
-          }}
-          onClick={() => balance < 10 && addTokens(client)}
-        >
-          {balance < 10 ? (
-            'Add tokens'
-          ) : isLoading ? (
-            <Spinner width="20px" height="20px" />
-          ) : (
-            'Submit'
-          )}
-        </Button>
-      </Flex>
+      <WrapperForm onSubmit={methods.handleSubmit(onSubmit)}>
+        <>
+          <CreateProcessHeader />
+          <CreateProcessSettings />
+          <CreateProcessAddresses />
+          <CreateProcessQuestions />
+          <Button
+            type="submit"
+            _dark={{ bg: ' #0f141c' }}
+            isDisabled={balance < 10 || isLoading}
+            _disabled={{
+              cursor: 'copy',
+            }}
+            onClick={() => balance < 10 && addTokens(client)}
+          >
+            {balance < 10 ? (
+              'Add tokens'
+            ) : isLoading ? (
+              <Spinner width="20px" height="20px" />
+            ) : (
+              'Submit'
+            )}
+          </Button>
+        </>
+      </WrapperForm>
     </FormProvider>
   );
 };
 
-const handleSubmit = async (
+const handleSubmitElec = async (
   data: FormValues,
-  client: any,
-  balance: any,
+  client: VocdoniSDKClient,
+  balance: number,
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   setIsLoading(true);

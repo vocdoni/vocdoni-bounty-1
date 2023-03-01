@@ -1,10 +1,11 @@
 import { IconButton } from '@chakra-ui/button';
 import { AddIcon } from '@chakra-ui/icons';
 import { Flex, Text } from '@chakra-ui/layout';
+import { VocdoniSDKClient } from '@vocdoni/sdk';
 import { addTokens } from '../../lib/sdk/sdk';
 
 interface Props {
-  client: any;
+  client: VocdoniSDKClient;
   balance: number;
 }
 

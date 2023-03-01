@@ -1,11 +1,11 @@
-export const customTheme = {
-  fontSizes: {
-    lg: '18px',
-  },
+import { extendTheme } from '@chakra-ui/react';
+import { theme as vtheme } from '@vocdoni/react-components';
+
+export const theme = extendTheme(vtheme, {
   colors: {
-    gray: {
-      100: '#fafafa',
-      200: '#f7f7f7',
+    black: {
+      c60: '#1A202C',
+      c90: '#0f141c',
     },
   },
-};
+});

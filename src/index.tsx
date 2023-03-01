@@ -1,6 +1,5 @@
 // @ts-nocheck
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
-import { theme } from '@vocdoni/react-components';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { WagmiConfig } from 'wagmi';
@@ -8,6 +7,7 @@ import { App } from './App';
 import { wagmiClient } from './lib/rainbow/rainbow';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
+import { theme } from './styles/theme';
 
 const container = document.getElementById('root');
 if (!container) throw new Error('Failed to find the root element');

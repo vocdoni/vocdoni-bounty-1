@@ -1,6 +1,7 @@
-import { Box, Flex, Text, useDisclosure } from '@chakra-ui/react';
+import { Box, Text, useDisclosure } from '@chakra-ui/react';
 import { PublishedElection } from '@vocdoni/sdk';
 import { Link } from 'react-router-dom';
+import WrapperListRow from '../Wrappers/WrapperListRow';
 import ProcessListActionButtons from './ProcessListActionButtons';
 import ProcessListInfoModal from './ProcessListInfoModal';
 
@@ -15,32 +16,25 @@ const ProcessListRow = ({ el, setElectionsList }: Props) => {
   return (
     <>
       <ProcessListInfoModal el={el} isOpen={isOpen} onClose={onClose} />
-      <Flex
-        mx="auto"
-        py={3}
-        px={5}
-        alignItems="center"
-        width="100%"
-        borderRadius={12}
-        boxShadow="0px 0px 8px 2px rgba(69,69,69,0.3)"
-        _dark={{ boxShadow: '0px 0px 8px 2px #333f57' }}
-      >
-        <Box isTruncated flex="1 1 auto" cursor="pointer">
-          <Link to={`/${el.id}`}>
-            <Text width="100%" isTruncated title={el.title.default}>
-              {el.title.default}
-            </Text>
-            <Text width="100%" color="gray.500" isTruncated title={el.id}>
-              {el.id}
-            </Text>
-          </Link>
-        </Box>
-        <ProcessListActionButtons
-          el={el}
-          setElectionsList={setElectionsList}
-          onOpen={onOpen}
-        />
-      </Flex>
+      <WrapperListRow>
+        <>
+          <Box isTruncated flex="1 1 auto" cursor="pointer">
+            <Link to={`/${el.id}`}>
+              <Text width="100%" isTruncated title={el.title.default}>
+                {el.title.default}
+              </Text>
+              <Text width="100%" color="gray.500" isTruncated title={el.id}>
+                {el.id}
+              </Text>
+            </Link>
+          </Box>
+          <ProcessListActionButtons
+            el={el}
+            setElectionsList={setElectionsList}
+            onOpen={onOpen}
+          />
+        </>
+      </WrapperListRow>
     </>
   );
 };
