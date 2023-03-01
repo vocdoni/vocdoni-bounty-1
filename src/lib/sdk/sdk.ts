@@ -1,35 +1,17 @@
-import {
-  Election,
-  EnvOptions,
-  PlainCensus,
-  VocdoniSDKClient,
-  WeightedCensus,
-} from '@vocdoni/sdk';
+import { Election, PlainCensus, WeightedCensus } from '@vocdoni/sdk';
 import {
   Addresses,
   FormValues,
   Questions,
 } from '../../components/CreateProcess';
 
-export const getClient = (singer: any) =>
-  new VocdoniSDKClient({
-    env: EnvOptions.DEV,
-    wallet: singer,
-  });
-
-export const updateBalance = async (client: any) => {
-  const acc = await client.createAccount();
+export const addTokens = async (client: any) => {
   try {
-    if (!acc) {
-      throw new Error('fetch account failed');
-    }
-
-    if (acc.balance <= 0) {
-      await client.collectFaucetTokens();
-    }
-  } catch (e) {
-    console.error('failed account creation', e);
+    await client.collectFaucetTokens();
+  } catch (err) {
+    console.log(err);
   }
+  window.location.reload();
 };
 
 export const getPlainCensus = async (addresses: string[]) => {

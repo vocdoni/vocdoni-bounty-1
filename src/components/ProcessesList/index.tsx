@@ -1,9 +1,10 @@
-import { Box, Flex, HStack, Spinner } from '@chakra-ui/react';
+import { Box, Button, Flex, HStack, Spinner, VStack } from '@chakra-ui/react';
 import { useClientContext } from '@vocdoni/react-components';
 import { PublishedElection } from '@vocdoni/sdk';
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { getElectionsToDisplay } from '../../lib/processList/filterElections';
+import { addTokens } from '../../lib/sdk/sdk';
 import ProcessesListFilters from './ProcessesListFilters';
 import ProcessListRow from './ProcessListRow';
 
@@ -25,9 +26,7 @@ const ProcessesList = () => {
     },
   });
 
-  const { client } = useClientContext();
-
-  console.log(client);
+  const { client, balance } = useClientContext();
 
   const [electionsList, setElectionsList] = useState<PublishedElection[]>([]);
 
@@ -53,6 +52,13 @@ const ProcessesList = () => {
 
   return (
     <Box m="16px auto" p={4} width={{ base: '97%', lg: '650px' }}>
+      <VStack>
+        {balance < 10 && (
+          <Button onClick={() => addTokens(client)} ml="end">
+            Add tokens to operate
+          </Button>
+        )}
+      </VStack>
       <FormProvider {...methodsFilters}>
         <ProcessesListFilters />
       </FormProvider>

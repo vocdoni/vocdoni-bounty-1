@@ -1,53 +1,3 @@
-// import { Box, Flex } from '@chakra-ui/react';
-// import { ConnectButton } from '@rainbow-me/rainbowkit';
-// import { NavLink } from 'react-router-dom';
-// import { ColorModeSwitcher } from '../../ColorModeSwitcher';
-// import VocdoniIcon from '../Icons/VocdoniIcon';
-
-// const Navbar = () => {
-//   return (
-//     <Box as="header">
-//       <Flex
-//         as="nav"
-//         justifyContent="end"
-//         alignItems="center"
-//         gap={4}
-//         paddingTop={4}
-//         mb={8}
-//         sx={{
-//           '& .active': {
-//             color: 'green.vocdoni',
-//           },
-//         }}
-//       >
-//         <Box marginRight="auto">
-//           <NavLink to="/">
-//             <VocdoniIcon />
-//           </NavLink>
-//         </Box>
-
-// <NavLink to="createprocess">Create Process</NavLink>
-// <NavLink to="processeslist">Processes List</NavLink>
-// <ConnectButton accountStatus="avatar" chainStatus="icon" />
-
-// <ColorModeSwitcher mb={1} size="sm" justifySelf="flex-end" />
-// <IconButton
-//             size={'md'}
-//             icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-//             aria-label={'Open Menu'}
-//             display={{ md: 'none' }}
-//             onClick={isOpen ? onClose : onOpen}
-//           />
-//       </Flex>
-//     </Box>
-//   );
-// };
-
-// export default Navbar;
-
-import { NavLink } from 'react-router-dom';
-import VocdoniIcon from '../Icons/VocdoniIcon';
-
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
 import {
   Box,
@@ -59,12 +9,17 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { useClientContext } from '@vocdoni/react-components';
+import { NavLink } from 'react-router-dom';
 import { useAccount } from 'wagmi';
 import { ColorModeSwitcher } from '../../ColorModeSwitcher';
+import BtnVocdoniTokens from '../Buttons/BtnVocdoniTokens';
+import VocdoniIcon from '../Icons/VocdoniIcon';
 
 const Navbar = () => {
   const { isConnected } = useAccount();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { client, balance } = useClientContext();
 
   return (
     <Box as="nav">
@@ -86,7 +41,7 @@ const Navbar = () => {
           </NavLink>
         </Box>
 
-        <Box display={{ base: 'none', md: 'flex' }}>
+        <Box display={{ base: 'none', lg: 'flex' }}>
           <UnorderedList display="flex" alignItems="center" gap={4}>
             {isConnected && (
               <>
@@ -102,6 +57,11 @@ const Navbar = () => {
               <ConnectButton accountStatus="avatar" chainStatus="icon" />
             </ListItem>
             <ListItem listStyleType="none">
+              {isConnected && (
+                <BtnVocdoniTokens balance={balance} client={client} />
+              )}
+            </ListItem>
+            <ListItem listStyleType="none">
               <ColorModeSwitcher mb={1} size="sm" justifySelf="flex-end" />
             </ListItem>
           </UnorderedList>
@@ -111,13 +71,13 @@ const Navbar = () => {
           size={'md'}
           icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
           aria-label={'Open Menu'}
-          display={{ md: 'none' }}
+          display={{ lg: 'none' }}
           onClick={isOpen ? onClose : onOpen}
         />
       </Flex>
       {isOpen ? (
         <Box
-          display={{ md: 'none' }}
+          display={{ lg: 'none' }}
           position="absolute"
           left={0}
           bg="white"
@@ -141,6 +101,9 @@ const Navbar = () => {
             {isConnected && (
               <>
                 <ListItem listStyleType="none">
+                  <BtnVocdoniTokens balance={balance} client={client} />
+                </ListItem>
+                <ListItem listStyleType="none">
                   <Button onClick={onClose}>
                     <NavLink to="createprocess">Create Process</NavLink>
                   </Button>
@@ -161,4 +124,5 @@ const Navbar = () => {
     </Box>
   );
 };
+
 export default Navbar;

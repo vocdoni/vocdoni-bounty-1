@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useAccount } from 'wagmi';
 import {
+  addTokens,
   getPlainCensus,
   getWeightedCensus,
   handleElection,
@@ -101,8 +102,22 @@ const CreateProcess = () => {
         <CreateProcessSettings />
         <CreateProcessAddresses />
         <CreateProcessQuestions />
-        <Button type="submit" _dark={{ bg: ' #0f141c' }}>
-          {isLoading ? <Spinner width="20px" height="20px" /> : 'Submit'}
+        <Button
+          type="submit"
+          _dark={{ bg: ' #0f141c' }}
+          isDisabled={balance < 10 || isLoading}
+          _disabled={{
+            cursor: 'copy',
+          }}
+          onClick={() => balance < 10 && addTokens(client)}
+        >
+          {balance < 10 ? (
+            'Add tokens'
+          ) : isLoading ? (
+            <Spinner width="20px" height="20px" />
+          ) : (
+            'Submit'
+          )}
         </Button>
       </Flex>
     </FormProvider>
