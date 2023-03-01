@@ -1,10 +1,29 @@
-import { Text } from '@chakra-ui/react';
-import {
-  ElectionDescription,
-  ElectionProvider,
-  ElectionTitle,
-} from '@vocdoni/react-components';
+// import { Text } from '@chakra-ui/react';
+// import {
+//   ElectionDescription,
+//   ElectionProvider,
+//   ElectionTitle,
+// } from '@vocdoni/react-components';
 
+// interface Props {
+//   id: any;
+// }
+
+// const ProcessElection: React.FC<Props> = ({ id }) => {
+//   return (
+//     <>
+//       <ElectionProvider id={id}>
+//         <Text mb={12}>Process: {id}</Text>
+//         <ElectionTitle />
+//         <ElectionDescription />
+//       </ElectionProvider>
+//     </>
+//   );
+// };
+
+// export default ProcessElection;
+
+import { Election } from '@vocdoni/react-components';
 interface Props {
   id: any;
 }
@@ -12,11 +31,7 @@ interface Props {
 const ProcessElection: React.FC<Props> = ({ id }) => {
   return (
     <>
-      <ElectionProvider id={id}>
-        <Text mb={12}>Process: {id}</Text>
-        <ElectionTitle />
-        <ElectionDescription />
-      </ElectionProvider>
+      <Election id={id} />
     </>
   );
 };

@@ -1,9 +1,9 @@
-import { Box } from '@chakra-ui/react';
+import { Text } from '@chakra-ui/react';
 
 const Footer = () => (
-  <Box mt="auto" mb={4}>
+  <Text textAlign="center" mt="auto" mb={4}>
     Footer
-  </Box>
+  </Text>
 );
 
 export default Footer;

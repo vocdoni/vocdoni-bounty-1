@@ -1,9 +1,10 @@
-import { ChakraProvider, theme, useColorMode } from '@chakra-ui/react';
+import { ChakraProvider, extendTheme, useColorMode } from '@chakra-ui/react';
 import {
   darkTheme,
   lightTheme,
   RainbowKitProvider,
 } from '@rainbow-me/rainbowkit';
+import { theme } from '@vocdoni/react-components';
 import { RouterProvider } from 'react-router-dom';
 import { WagmiConfig } from 'wagmi';
 import { chains, wagmiClient } from './lib/rainbow/rainbow';
@@ -26,7 +27,7 @@ export const App = () => {
         });
 
   return (
-    <ChakraProvider theme={theme}>
+    <ChakraProvider theme={extendTheme(theme)}>
       <WagmiConfig client={wagmiClient}>
         <RainbowKitProvider chains={chains} theme={rainbowStyles}>
           <RouterProvider router={router} />

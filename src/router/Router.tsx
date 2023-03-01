@@ -3,7 +3,7 @@ import {
   createRoutesFromElements,
   Route,
 } from 'react-router-dom';
-
+import Error from '../components/Layouts/Error';
 import ProtectedRoutes from '../components/Layouts/ProtectedRoutes';
 import Create from '../elements/Create';
 import Home from '../elements/Home';
@@ -19,7 +19,12 @@ const router = createHashRouter(
       <Route element={<ProtectedRoutes />}>
         <Route path="createprocess" element={<Create />} />
         <Route path="processeslist" element={<List />} />
-        <Route path=":id" element={<Process />} loader={getProcessInfo} />
+        <Route
+          path=":id"
+          element={<Process />}
+          loader={getProcessInfo}
+          errorElement={<Error />}
+        />
       </Route>
 
       <Route path="*" element={<NotFound />} />

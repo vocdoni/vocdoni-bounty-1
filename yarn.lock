@@ -3879,9 +3879,10 @@
     long "^5.2.1"
     protobufjs "^7.1.2"
 
-"@vocdoni/react-components@file:../v/others/ui-components/packages/components/vocdoni-react-components-v0.0.2.tgz":
+"@vocdoni/react-components@^0.0.2":
   version "0.0.2"
-  resolved "file:../v/others/ui-components/packages/components/vocdoni-react-components-v0.0.2.tgz#64fec687a3eb5d148ee8b3ab52287a234b408d86"
+  resolved "https://registry.yarnpkg.com/@vocdoni/react-components/-/react-components-0.0.2.tgz#4c8043839258a8ca557eb67fd2f51fc86a292916"
+  integrity sha512-jrZBa20GcN4WfbG1zvuxj4GTd3k1JrbyMQXKroxRKcwHg2fP4/pjV7hqIfoGq7JKnrrHF5bCOBSfNWDSPYzD+g==
 
 "@vocdoni/sdk@^0.0.3-alpha":
   version "0.0.3-alpha"
