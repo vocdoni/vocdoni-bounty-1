@@ -11,7 +11,6 @@ export const addTokens = async (client: any) => {
   } catch (err) {
     console.log(err);
   }
-  window.location.reload();
 };
 
 export const getPlainCensus = async (addresses: string[]) => {

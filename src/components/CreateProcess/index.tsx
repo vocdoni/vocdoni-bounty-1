@@ -3,8 +3,8 @@ import { useClientContext } from '@vocdoni/react-components';
 import { VocdoniSDKClient } from '@vocdoni/sdk';
 import { useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { TOKENS_BALANCE_MINIMUM } from '../../constants/tokensBalance';
 import {
-  addTokens,
   getPlainCensus,
   getWeightedCensus,
   handleElection,
@@ -94,14 +94,10 @@ const CreateProcess = () => {
           <Button
             type="submit"
             _dark={{ bg: ' #0f141c' }}
-            isDisabled={balance < 10 || isLoading}
-            _disabled={{
-              cursor: 'copy',
-            }}
-            onClick={() => balance < 10 && addTokens(client)}
+            isDisabled={balance < TOKENS_BALANCE_MINIMUM || isLoading}
           >
-            {balance < 10 ? (
-              'Add tokens'
+            {balance < TOKENS_BALANCE_MINIMUM ? (
+              'Not enough tokens to create a election'
             ) : isLoading ? (
               <Spinner width="20px" height="20px" />
             ) : (
@@ -123,8 +119,6 @@ const handleSubmitElec = async (
   setIsLoading(true);
 
   try {
-    if (balance < 20) await client.collectFaucetTokens();
-
     let census;
 
     if (data.weightedVote) census = await getWeightedCensus(data.addresses);
@@ -142,6 +136,7 @@ const handleSubmitElec = async (
     const info = await client.fetchElection(id);
 
     console.log(info);
+    window.location.reload();
   } catch (err: any) {
     console.log(err.message);
   } finally {

@@ -1,10 +1,10 @@
-import { Box, Button, Flex, HStack, Spinner, VStack } from '@chakra-ui/react';
+import { Box, Flex, HStack, Spinner, Text, VStack } from '@chakra-ui/react';
 import { useClientContext } from '@vocdoni/react-components';
 import { PublishedElection } from '@vocdoni/sdk';
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { TOKENS_BALANCE_MINIMUM } from '../../constants/tokensBalance';
 import { getElectionsToDisplay } from '../../lib/processList/filterElections';
-import { addTokens } from '../../lib/sdk/sdk';
 import ProcessesListFilters from './ProcessesListFilters';
 import ProcessListRow from './ProcessListRow';
 
@@ -49,10 +49,8 @@ const ProcessesList = () => {
   return (
     <Box m="16px auto" p={4} width={{ base: '97%', lg: '650px' }}>
       <VStack>
-        {balance < 10 && (
-          <Button onClick={() => addTokens(client)} ml="end">
-            Add tokens to operate
-          </Button>
+        {balance < TOKENS_BALANCE_MINIMUM && (
+          <Text color="red.600">Not enough tokens to operate</Text>
         )}
       </VStack>
       <FormProvider {...methodsFilters}>
@@ -64,7 +62,7 @@ const ProcessesList = () => {
       </HStack>
 
       <Flex direction="column" gap={4} mt={8} mx="auto">
-        {electionsListFiltered?.map((el: any) => (
+        {electionsListFiltered?.map((el: PublishedElection) => (
           <ProcessListRow
             key={el.id}
             el={el}

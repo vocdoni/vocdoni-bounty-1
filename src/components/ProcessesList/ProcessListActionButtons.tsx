@@ -3,6 +3,7 @@ import { ButtonGroup, HStack, IconButton } from '@chakra-ui/react';
 import { useClientContext } from '@vocdoni/react-components';
 import { PublishedElection } from '@vocdoni/sdk';
 import { FaPause, FaPlay, FaStop } from 'react-icons/fa';
+import { TOKENS_BALANCE_MINIMUM } from '../../constants/tokensBalance';
 import { getButtonsDisabled } from '../../lib/processList/buttonsDisabled';
 
 interface Props {
@@ -12,7 +13,9 @@ interface Props {
 }
 
 const ProcessListActionButtons = ({ el, setElectionsList, onOpen }: Props) => {
-  const { client } = useClientContext();
+  const { client, balance } = useClientContext();
+
+  const notBalance = balance < TOKENS_BALANCE_MINIMUM;
 
   const { allDisabled, readyDisabled, pauseDisabled } = getButtonsDisabled(el);
 
@@ -25,8 +28,9 @@ const ProcessListActionButtons = ({ el, setElectionsList, onOpen }: Props) => {
           onClick={async () => {
             await client.continueElection(el.id);
             setElectionsList([]);
+            window.location.reload();
           }}
-          isDisabled={allDisabled || readyDisabled}
+          isDisabled={allDisabled || readyDisabled || notBalance}
         />
         <IconButton
           aria-label="Search database"
@@ -34,8 +38,9 @@ const ProcessListActionButtons = ({ el, setElectionsList, onOpen }: Props) => {
           onClick={async () => {
             await client.pauseElection(el.id);
             setElectionsList([]);
+            window.location.reload();
           }}
-          isDisabled={allDisabled || pauseDisabled}
+          isDisabled={allDisabled || pauseDisabled || notBalance}
         />
         <IconButton
           aria-label="Search database"
@@ -43,8 +48,9 @@ const ProcessListActionButtons = ({ el, setElectionsList, onOpen }: Props) => {
           onClick={async () => {
             await client.cancelElection(el.id);
             setElectionsList([]);
+            window.location.reload();
           }}
-          isDisabled={allDisabled}
+          isDisabled={allDisabled || notBalance}
         />
       </ButtonGroup>
 
