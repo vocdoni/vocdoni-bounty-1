@@ -80,7 +80,7 @@ const CreateProcess = () => {
     },
   });
   const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
-    handleSubmitElec(data, client, balance, setIsLoading);
+    handleSubmitElec(data, client, setIsLoading);
   };
 
   return (
@@ -113,11 +113,10 @@ const CreateProcess = () => {
 const handleSubmitElec = async (
   data: FormValues,
   client: VocdoniSDKClient,
-  balance: number,
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   setIsLoading(true);
-
+  await client.createAccount();
   try {
     let census;
 

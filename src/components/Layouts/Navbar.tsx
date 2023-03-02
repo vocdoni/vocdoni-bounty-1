@@ -7,9 +7,11 @@ import {
   ListItem,
   UnorderedList,
   useDisclosure,
+  useOutsideClick,
 } from '@chakra-ui/react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useClientContext } from '@vocdoni/react-components';
+import { useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAccount } from 'wagmi';
 import { ColorModeSwitcher } from '../../ColorModeSwitcher';
@@ -18,11 +20,18 @@ import VocdoniIcon from '../Icons/VocdoniIcon';
 
 const Navbar = () => {
   const { isConnected } = useAccount();
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const { client, balance } = useClientContext();
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const refNav = useRef<any>();
+  useOutsideClick({
+    ref: refNav,
+    handler: () => onClose(),
+  });
+
   return (
-    <Box as="nav">
+    <Box as="nav" ref={refNav}>
       <Flex
         justifyContent="end"
         alignItems="center"
