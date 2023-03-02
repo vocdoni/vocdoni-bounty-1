@@ -135,7 +135,6 @@ const handleSubmitElec = async (
     const info = await client.fetchElection(id);
 
     console.log(info);
-    window.location.reload();
   } catch (err: any) {
     console.log(err.message);
   } finally {

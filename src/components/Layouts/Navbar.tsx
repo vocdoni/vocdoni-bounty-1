@@ -18,6 +18,8 @@ import { ColorModeSwitcher } from '../../ColorModeSwitcher';
 import BtnVocdoniTokens from '../Buttons/BtnVocdoniTokens';
 import VocdoniIcon from '../Icons/VocdoniIcon';
 
+export const forceRenderNavbar = new CustomEvent('forceRenderNavbar');
+
 const Navbar = () => {
   const { isConnected } = useAccount();
   const { client, balance } = useClientContext();
@@ -29,6 +31,13 @@ const Navbar = () => {
     ref: refNav,
     handler: () => onClose(),
   });
+
+  const handlerForceRenderNavbar = async () => {
+    // const res = await client.fetchAccountInfo();
+    console.log('custom event');
+  };
+
+  document.addEventListener('forceRenderNavbar', handlerForceRenderNavbar);
 
   return (
     <Box as="nav" ref={refNav}>

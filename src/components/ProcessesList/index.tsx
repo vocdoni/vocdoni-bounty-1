@@ -15,6 +15,7 @@ export interface PropsFilters {
 
 const IDS = [
   'c5d2460186f72e5b02237f4489d53a7fe4ae2134fabef8323507020400000000',
+  'c5d2460186f72e5b02237f4489d53a7fe4ae2134fabef8323507020400000002',
 ];
 
 const ProcessesList = () => {
@@ -39,7 +40,10 @@ const ProcessesList = () => {
   useEffect(() => {
     if (electionsList.length || !client) return;
 
-    Promise.allSettled([client.fetchElection(IDS[0])])
+    Promise.allSettled([
+      client.fetchElection(IDS[0]),
+      client.fetchElection(IDS[1]),
+    ])
       .then((res) =>
         res.filter((el) => el.status === 'fulfilled').map((el: any) => el.value)
       )
