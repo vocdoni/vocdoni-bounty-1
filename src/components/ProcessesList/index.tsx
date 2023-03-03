@@ -1,9 +1,8 @@
-import { Box, Flex, HStack, Spinner, Text, VStack } from '@chakra-ui/react';
+import { Box, Flex, HStack, Spinner } from '@chakra-ui/react';
 import { useClientContext } from '@vocdoni/react-components';
 import { PublishedElection } from '@vocdoni/sdk';
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { TOKENS_BALANCE_MINIMUM } from '../../constants/tokensBalance';
 import { getElectionsToDisplay } from '../../lib/processList/filterElections';
 import ProcessesListFilters from './ProcessesListFilters';
 import ProcessListRow from './ProcessListRow';
@@ -13,23 +12,16 @@ export interface PropsFilters {
   onlyCurrentElections: boolean;
 }
 
-const IDS = [
-  'c5d2460186f72e5b02237f4489d53a7fe4ae2134fabef8323507020400000000',
-  'c5d2460186f72e5b02237f4489d53a7fe4ae2134fabef8323507020400000002',
-];
-
 const ProcessesList = () => {
+  const { client } = useClientContext();
+  const [electionsList, setElectionsList] = useState<any[]>([]);
+
   const methodsFilters = useForm<PropsFilters>({
     defaultValues: {
       search: '',
       onlyCurrentElections: false,
     },
   });
-
-  const { client, balance } = useClientContext();
-
-  const [electionsList, setElectionsList] = useState<PublishedElection[]>([]);
-
   methodsFilters.watch(['onlyCurrentElections', 'search']);
 
   const electionsListFiltered = getElectionsToDisplay(
@@ -38,25 +30,18 @@ const ProcessesList = () => {
   );
 
   useEffect(() => {
-    if (electionsList.length || !client) return;
-
-    Promise.allSettled([
-      client.fetchElection(IDS[0]),
-      client.fetchElection(IDS[1]),
-    ])
-      .then((res) =>
-        res.filter((el) => el.status === 'fulfilled').map((el: any) => el.value)
-      )
-      .then((res) => setElectionsList(res));
+    if (!client || electionsList.length) return;
+    // client
+    //   .fetchElection(
+    //     'c5d2460186f72e5b02237f4489d53a7fe4ae2134fabef8323507020400000000'
+    //   )
+    //   .then((res) => console.log('first', res))
+    //   .catch(console.log);
+    client.fetchElections().then((res) => setElectionsList(res));
   }, [client, electionsList.length]);
 
   return (
-    <Box m="16px auto" p={4} width={{ base: '97%', lg: '650px' }}>
-      <VStack>
-        {balance < TOKENS_BALANCE_MINIMUM && (
-          <Text color="red.600">Not enough tokens to operate</Text>
-        )}
-      </VStack>
+    <Box m="16px auto" p={4} width={{ base: '97%', md: '650px' }}>
       <FormProvider {...methodsFilters}>
         <ProcessesListFilters />
       </FormProvider>

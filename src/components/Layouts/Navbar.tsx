@@ -27,17 +27,11 @@ const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const refNav = useRef<any>();
+
   useOutsideClick({
     ref: refNav,
     handler: () => onClose(),
   });
-
-  const handlerForceRenderNavbar = async () => {
-    // const res = await client.fetchAccountInfo();
-    console.log('custom event');
-  };
-
-  document.addEventListener('forceRenderNavbar', handlerForceRenderNavbar);
 
   return (
     <Box as="nav" ref={refNav}>
