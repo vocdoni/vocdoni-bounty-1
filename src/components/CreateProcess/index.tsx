@@ -1,6 +1,7 @@
 import { Button, useDisclosure } from '@chakra-ui/react';
 import { useClientContext } from '@vocdoni/react-components';
 import { VocdoniSDKClient } from '@vocdoni/sdk';
+import { useEffect } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { MODAL_TYPE } from '../../constants/modalType';
 import {
@@ -88,6 +89,11 @@ const CreateProcess = () => {
   const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
     handleSubmitElec(data, client, onOpen, onClose);
   };
+
+  useEffect(() => {
+    if (!account) return;
+    methods.setValue(`addresses.${0}.address`, account.address);
+  }, [account, methods]);
 
   return (
     <FormProvider {...methods}>
