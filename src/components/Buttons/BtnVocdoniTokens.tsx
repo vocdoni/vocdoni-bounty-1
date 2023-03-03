@@ -2,18 +2,16 @@ import { IconButton } from '@chakra-ui/button';
 import { AddIcon } from '@chakra-ui/icons';
 import { Flex, Text } from '@chakra-ui/layout';
 import { useDisclosure } from '@chakra-ui/react';
-import { VocdoniSDKClient } from '@vocdoni/sdk';
+import { useClientContext } from '@vocdoni/react-components';
+import { useContext } from 'react';
 import { MODAL_TYPE } from '../../constants/modalType';
-import { addTokens } from '../../lib/sdk/sdk';
+import { UpdatedBalanceContext } from '../../lib/contexts/UpdatedBalanceContext';
 import ModalCustom from '../Modals/ModalCustom';
 
-interface Props {
-  client: VocdoniSDKClient;
-  balance: number;
-}
-
-const BtnVocdoniTokens = ({ balance, client }: Props) => {
+const BtnVocdoniTokens = () => {
+  const { client } = useClientContext();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { updatedBalance, updateBalance } = useContext(UpdatedBalanceContext);
   return (
     <>
       <ModalCustom
@@ -36,12 +34,23 @@ const BtnVocdoniTokens = ({ balance, client }: Props) => {
           scale: 3,
         }}
       >
-        <Text fontWeight="bold">{balance} Tokens</Text>
+        <Text fontWeight="bold">{updatedBalance} Tokens</Text>
+
         <IconButton
           size="sm"
           icon={<AddIcon />}
           aria-label="Add tokens"
-          onClick={() => addTokens(client, onOpen, onClose)}
+          onClick={async () => {
+            onOpen();
+            try {
+              await client.collectFaucetTokens();
+            } catch (err) {
+              console.log(err);
+            } finally {
+              onClose();
+              updateBalance();
+            }
+          }}
         />
       </Flex>
     </>

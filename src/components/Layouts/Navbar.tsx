@@ -10,7 +10,6 @@ import {
   useOutsideClick,
 } from '@chakra-ui/react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { useClientContext } from '@vocdoni/react-components';
 import { useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAccount } from 'wagmi';
@@ -22,7 +21,6 @@ export const forceRenderNavbar = new CustomEvent('forceRenderNavbar');
 
 const Navbar = () => {
   const { isConnected } = useAccount();
-  const { client, balance } = useClientContext();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -69,9 +67,7 @@ const Navbar = () => {
               <ConnectButton accountStatus="avatar" chainStatus="icon" />
             </ListItem>
             <ListItem listStyleType="none">
-              {isConnected && (
-                <BtnVocdoniTokens balance={balance} client={client} />
-              )}
+              {isConnected && <BtnVocdoniTokens />}
             </ListItem>
             <ListItem listStyleType="none">
               <ColorModeSwitcher mb={1} size="sm" justifySelf="flex-end" />
@@ -115,7 +111,7 @@ const Navbar = () => {
             {isConnected && (
               <>
                 <ListItem listStyleType="none">
-                  <BtnVocdoniTokens balance={balance} client={client} />
+                  <BtnVocdoniTokens />
                 </ListItem>
                 <ListItem listStyleType="none">
                   <Button onClick={onClose}>

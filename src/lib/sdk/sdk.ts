@@ -1,29 +1,9 @@
-import {
-  Election,
-  PlainCensus,
-  VocdoniSDKClient,
-  WeightedCensus,
-} from '@vocdoni/sdk';
+import { Election, PlainCensus, WeightedCensus } from '@vocdoni/sdk';
 import {
   Addresses,
   FormValues,
   Questions,
 } from '../../components/CreateProcess';
-
-export const addTokens = async (
-  client: VocdoniSDKClient,
-  onOpen: () => void,
-  onClose: () => void
-) => {
-  onOpen();
-  try {
-    await client.collectFaucetTokens();
-  } catch (err) {
-    console.log(err);
-  } finally {
-    onClose();
-  }
-};
 
 export const getPlainCensus = async (addresses: string[]) => {
   const census = new PlainCensus();
@@ -44,7 +24,7 @@ export const getWeightedCensus = async (addresses: Addresses[]) => {
   return census;
 };
 
-const addQuestions = (election: any, questions: Questions[]) => {
+export const addQuestions = (election: any, questions: Questions[]) => {
   const questionsFormatted = questions.map((question: any) => ({
     title: question.title,
     description: question.description,
@@ -59,11 +39,7 @@ const addQuestions = (election: any, questions: Questions[]) => {
   );
 };
 
-export const handleElection = async (
-  formValues: FormValues,
-  census: any,
-  client: any
-) => {
+export const handleElection = async (formValues: FormValues, census: any) => {
   const startDate = new Date(formValues.dates.start);
   startDate.setHours(startDate.getHours());
 
@@ -87,8 +63,6 @@ export const handleElection = async (
     voteType: { maxVoteOverwrites: Number(formValues.maxVoteOverwrites) },
     census,
   });
-  addQuestions(election, formValues.questions);
 
-  // return await client.createElection(election);
   return election;
 };

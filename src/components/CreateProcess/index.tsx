@@ -1,10 +1,12 @@
 import { Button, useDisclosure } from '@chakra-ui/react';
 import { useClientContext } from '@vocdoni/react-components';
 import { VocdoniSDKClient } from '@vocdoni/sdk';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { MODAL_TYPE } from '../../constants/modalType';
+import { UpdatedBalanceContext } from '../../lib/contexts/UpdatedBalanceContext';
 import {
+  addQuestions,
   getPlainCensus,
   getWeightedCensus,
   handleElection,
@@ -47,14 +49,9 @@ export interface Addresses {
   weight: number;
 }
 
-const a = async (client: any) => {
-  console.log(await client.fetchAccountInfo());
-};
-
 const CreateProcess = () => {
   const { client, account } = useClientContext();
-
-  a(client);
+  const { updateBalance } = useContext(UpdatedBalanceContext);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -86,8 +83,11 @@ const CreateProcess = () => {
       ],
     },
   });
-  const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
-    handleSubmitElec(data, client, onOpen, onClose);
+  const onSubmit: SubmitHandler<FormValues> = async (data: FormValues) => {
+    onOpen();
+    await handleSubmitElection(data, client);
+    updateBalance();
+    onClose();
   };
 
   useEffect(() => {
@@ -117,13 +117,10 @@ const CreateProcess = () => {
   );
 };
 
-const handleSubmitElec = async (
+const handleSubmitElection = async (
   data: FormValues,
-  client: VocdoniSDKClient,
-  onOpen: () => void,
-  onClose: () => void
+  client: VocdoniSDKClient
 ) => {
-  onOpen();
   await client.createAccount();
   try {
     let census;
@@ -134,19 +131,15 @@ const handleSubmitElec = async (
       census = await getPlainCensus(addresses);
     }
 
-    const election = await handleElection(data, census, client);
+    const election = await handleElection(data, census);
+
+    await addQuestions(election, data.questions);
 
     const id = await client.createElection(election);
 
     console.log('id', id);
-
-    const info = await client.fetchElection(id);
-
-    console.log(info);
   } catch (err: any) {
     console.log(err.message);
-  } finally {
-    onClose();
   }
 };
 

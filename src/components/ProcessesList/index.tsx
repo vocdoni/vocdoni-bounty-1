@@ -13,7 +13,7 @@ export interface PropsFilters {
 }
 
 const ProcessesList = () => {
-  const { client } = useClientContext();
+  const { client, account } = useClientContext();
   const [electionsList, setElectionsList] = useState<any[]>([]);
 
   const methodsFilters = useForm<PropsFilters>({
@@ -30,7 +30,7 @@ const ProcessesList = () => {
   );
 
   useEffect(() => {
-    if (!client || electionsList.length) return;
+    if (!account || electionsList.length) return;
     // client
     //   .fetchElection(
     //     'c5d2460186f72e5b02237f4489d53a7fe4ae2134fabef8323507020400000000'
@@ -38,7 +38,7 @@ const ProcessesList = () => {
     //   .then((res) => console.log('first', res))
     //   .catch(console.log);
     client.fetchElections().then((res) => setElectionsList(res));
-  }, [client, electionsList.length]);
+  }, [client, account, electionsList.length]);
 
   return (
     <Box m="16px auto" p={4} width={{ base: '97%', md: '650px' }}>
