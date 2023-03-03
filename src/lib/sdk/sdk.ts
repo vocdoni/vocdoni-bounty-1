@@ -1,20 +1,37 @@
-import { Election, PlainCensus, WeightedCensus } from '@vocdoni/sdk';
 import {
-  Addresses,
+  Census,
+  Election,
+  PlainCensus,
+  UnpublishedElection,
+  WeightedCensus,
+} from '@vocdoni/sdk';
+import {
+  Address,
   FormValues,
-  Questions,
+  Option,
+  Question,
 } from '../../components/CreateProcess';
 
+interface PropsQuestionFormatted {
+  title: string;
+  description: string;
+  options: PropsOptionsQuestionFormatted[];
+}
+
+interface PropsOptionsQuestionFormatted {
+  title: string;
+  value: number;
+}
 export const getPlainCensus = async (addresses: string[]) => {
   const census = new PlainCensus();
   census.add(addresses);
 
   return census;
 };
-export const getWeightedCensus = async (addresses: Addresses[]) => {
+export const getWeightedCensus = async (addresses: Address[]) => {
   const census = new WeightedCensus();
 
-  addresses.forEach((add: any) => {
+  addresses.forEach((add: Address) => {
     census.add({
       key: add.address,
       weight: BigInt(add.weight),
@@ -24,22 +41,32 @@ export const getWeightedCensus = async (addresses: Addresses[]) => {
   return census;
 };
 
-export const addQuestions = (election: any, questions: Questions[]) => {
-  const questionsFormatted = questions.map((question: any) => ({
-    title: question.title,
-    description: question.description,
-    options: question.options.map((q: any, i: number) => ({
+export const addQuestions = (
+  election: UnpublishedElection,
+  questions: Question[]
+) => {
+  const questionsFormatted = questions.map((question: Question) => ({
+    title: question.titleQuestion,
+    description: question.descriptionQuestion,
+    options: question.options.map((q: Option, i: number) => ({
       title: q.option,
       value: i,
     })),
   }));
 
-  questionsFormatted.forEach((q: any) =>
-    election.addQuestion(q.title, q.description, q.options)
+  questionsFormatted.forEach((questionFormatted: PropsQuestionFormatted) =>
+    election.addQuestion(
+      questionFormatted.title,
+      questionFormatted.description,
+      questionFormatted.options
+    )
   );
 };
 
-export const handleElection = async (formValues: FormValues, census: any) => {
+export const handleElection = async (
+  formValues: FormValues,
+  census: Census
+) => {
   const startDate = new Date(formValues.dates.start);
   startDate.setHours(startDate.getHours());
 

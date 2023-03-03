@@ -24,7 +24,7 @@ const Navbar = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const refNav = useRef<any>();
+  const refNav = useRef<HTMLDivElement>(null);
 
   useOutsideClick({
     ref: refNav,

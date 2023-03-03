@@ -6,7 +6,7 @@ import {
 } from '@vocdoni/react-components';
 
 interface Props {
-  id: any;
+  id: string;
 }
 
 const ProcessElection: React.FC<Props> = ({ id }) => {

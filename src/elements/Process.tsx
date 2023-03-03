@@ -4,6 +4,8 @@ import ProcessElection from '../components/ProcessElection';
 const Process = () => {
   let id = useLoaderData();
 
+  if (typeof id !== 'string') return null;
+
   return <ProcessElection id={id} />;
 };
 

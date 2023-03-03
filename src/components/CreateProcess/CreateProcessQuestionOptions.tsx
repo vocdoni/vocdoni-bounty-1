@@ -39,7 +39,7 @@ const CreateProcessQuestionOptions = ({
         onClick={() => appendOption({ option: '' })}
       />
     </HStack>
-    {fields.map((_: any, idx: number) => (
+    {fields.map((_, idx: number) => (
       <FormControl key={idx} mb={4}>
         <Flex alignItems="center">
           <FormLabel>Option {idx + 1}</FormLabel>

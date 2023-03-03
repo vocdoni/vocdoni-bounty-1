@@ -2,7 +2,7 @@ import { Flex } from '@chakra-ui/layout';
 
 interface Props {
   children: JSX.Element;
-  onSubmit: any;
+  onSubmit: () => void;
 }
 
 const WrapperForm = ({ children, onSubmit, ...props }: Props) => (

@@ -1,6 +1,9 @@
-import { ElectionStatus } from '@vocdoni/sdk';
+import { ElectionStatus, PublishedElection } from '@vocdoni/sdk';
 
-export const getButtonsDisabled = (el: any, electionStatus: any) => {
+export const getButtonsDisabled = (
+  el: PublishedElection,
+  electionStatus: ElectionStatus
+) => {
   const now = new Date();
 
   const isStarted = now.getTime() > el.startDate.getTime();

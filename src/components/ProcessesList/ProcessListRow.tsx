@@ -6,7 +6,7 @@ import ProcessListActionButtons from './ProcessListActionButtons';
 
 interface Props {
   el: PublishedElection;
-  setElectionsList: React.Dispatch<React.SetStateAction<any[]>>;
+  setElectionsList: React.Dispatch<React.SetStateAction<PublishedElection[]>>;
 }
 
 const ProcessListRow = ({ el, setElectionsList }: Props) => {

@@ -14,7 +14,7 @@ export interface PropsFilters {
 
 const ProcessesList = () => {
   const { client, account } = useClientContext();
-  const [electionsList, setElectionsList] = useState<any[]>([]);
+  const [electionsList, setElectionsList] = useState<PublishedElection[]>([]);
 
   const methodsFilters = useForm<PropsFilters>({
     defaultValues: {
@@ -31,7 +31,10 @@ const ProcessesList = () => {
 
   useEffect(() => {
     if (!account || electionsList.length) return;
-    client.fetchElections().then((res) => setElectionsList(res));
+    client
+      .fetchElections()
+      .then((res) => setElectionsList(res))
+      .catch(console.log);
   }, [client, account, electionsList.length]);
 
   return (

@@ -41,7 +41,7 @@ const CreateProcessQuestions = () => {
           }
         />
       </HStack>
-      {fields.map((question: any, index) => (
+      {fields.map((question, index) => (
         <CreateProcessQuestion
           key={question.id}
           index={index}

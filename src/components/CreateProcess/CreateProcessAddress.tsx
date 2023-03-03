@@ -27,7 +27,7 @@ const CreateProcessAddress = ({
   remove,
 }: Props) => (
   <>
-    {fields.map((add: any, i: number) => (
+    {fields.map((add, i: number) => (
       <FormControl key={add.id} mb={4}>
         <Flex alignItems="center">
           <FormLabel whiteSpace="nowrap">{`Address ${i + 1}`}</FormLabel>

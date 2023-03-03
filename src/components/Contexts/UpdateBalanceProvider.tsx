@@ -18,7 +18,7 @@ const UpdateBalanceProvider = ({ children }: Props) => {
 
     client
       .fetchAccountInfo()
-      .then((res: any) => {
+      .then((res) => {
         setUpdatedBalance(res.balance);
       })
       .catch(console.log);

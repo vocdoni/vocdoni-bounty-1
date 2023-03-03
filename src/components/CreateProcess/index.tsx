@@ -22,8 +22,8 @@ export interface FormValues {
   titleProcess: string;
   descriptionProcess: string;
   dates: {
-    start: any;
-    end: any;
+    start: Date;
+    end: Date;
   };
   electionType: {
     autoStart: boolean;
@@ -32,19 +32,21 @@ export interface FormValues {
   };
   maxVoteOverwrites: number;
   weightedVote: boolean;
-  addresses: Addresses[];
-  questions: Questions[];
+  addresses: Address[];
+  questions: Question[];
 }
 
-export interface Questions {
+export interface Question {
   titleQuestion: string;
   descriptionQuestion: string;
-  options: {
-    option: string;
-  }[];
+  options: Option[];
 }
 
-export interface Addresses {
+export interface Option {
+  option: string;
+}
+
+export interface Address {
   address: string;
   weight: number;
 }
