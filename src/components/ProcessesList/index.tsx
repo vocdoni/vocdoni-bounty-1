@@ -31,12 +31,6 @@ const ProcessesList = () => {
 
   useEffect(() => {
     if (!account || electionsList.length) return;
-    // client
-    //   .fetchElection(
-    //     'c5d2460186f72e5b02237f4489d53a7fe4ae2134fabef8323507020400000000'
-    //   )
-    //   .then((res) => console.log('first', res))
-    //   .catch(console.log);
     client.fetchElections().then((res) => setElectionsList(res));
   }, [client, account, electionsList.length]);
 
