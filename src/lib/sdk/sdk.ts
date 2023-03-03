@@ -1,15 +1,27 @@
-import { Election, PlainCensus, WeightedCensus } from '@vocdoni/sdk';
+import {
+  Election,
+  PlainCensus,
+  VocdoniSDKClient,
+  WeightedCensus,
+} from '@vocdoni/sdk';
 import {
   Addresses,
   FormValues,
   Questions,
 } from '../../components/CreateProcess';
 
-export const addTokens = async (client: any) => {
+export const addTokens = async (
+  client: VocdoniSDKClient,
+  onOpen: () => void,
+  onClose: () => void
+) => {
+  onOpen();
   try {
     await client.collectFaucetTokens();
   } catch (err) {
     console.log(err);
+  } finally {
+    onClose();
   }
 };
 

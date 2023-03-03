@@ -1,1 +1,0 @@
-export const TOKENS_BALANCE_MINIMUM = 20;

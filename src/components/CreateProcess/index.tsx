@@ -1,14 +1,14 @@
-import { Button, Spinner } from '@chakra-ui/react';
+import { Button, useDisclosure } from '@chakra-ui/react';
 import { useClientContext } from '@vocdoni/react-components';
 import { VocdoniSDKClient } from '@vocdoni/sdk';
-import { useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { TOKENS_BALANCE_MINIMUM } from '../../constants/tokensBalance';
+import { MODAL_TYPE } from '../../constants/modalType';
 import {
   getPlainCensus,
   getWeightedCensus,
   handleElection,
 } from '../../lib/sdk/sdk';
+import ModalCustom from '../Modals/ModalCustom';
 import WrapperForm from '../Wrappers/WrapperForm';
 import CreateProcessAddresses from './CreateProcessAddresses';
 import CreateProcessHeader from './CreateProcessHeader';
@@ -46,10 +46,16 @@ export interface Addresses {
   weight: number;
 }
 
-const CreateProcess = () => {
-  const { client, balance, account } = useClientContext();
+const a = async (client: any) => {
+  console.log(await client.fetchAccountInfo());
+};
 
-  const [isLoading, setIsLoading] = useState(false);
+const CreateProcess = () => {
+  const { client, account } = useClientContext();
+
+  a(client);
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const methods = useForm<FormValues>({
     defaultValues: {
@@ -80,29 +86,24 @@ const CreateProcess = () => {
     },
   });
   const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
-    handleSubmitElec(data, client, setIsLoading);
+    handleSubmitElec(data, client, onOpen, onClose);
   };
 
   return (
     <FormProvider {...methods}>
+      <ModalCustom
+        type={MODAL_TYPE.LOADING}
+        isOpen={isOpen}
+        onClose={onClose}
+      />
       <WrapperForm onSubmit={methods.handleSubmit(onSubmit)}>
         <>
           <CreateProcessHeader />
           <CreateProcessSettings />
           <CreateProcessAddresses />
           <CreateProcessQuestions />
-          <Button
-            type="submit"
-            _dark={{ bg: ' #0f141c' }}
-            isDisabled={balance < TOKENS_BALANCE_MINIMUM || isLoading}
-          >
-            {balance < TOKENS_BALANCE_MINIMUM ? (
-              'Not enough tokens to create a election'
-            ) : isLoading ? (
-              <Spinner width="20px" height="20px" />
-            ) : (
-              'Submit'
-            )}
+          <Button type="submit" _dark={{ bg: 'black.c90' }}>
+            Submit
           </Button>
         </>
       </WrapperForm>
@@ -113,9 +114,10 @@ const CreateProcess = () => {
 const handleSubmitElec = async (
   data: FormValues,
   client: VocdoniSDKClient,
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+  onOpen: () => void,
+  onClose: () => void
 ) => {
-  setIsLoading(true);
+  onOpen();
   await client.createAccount();
   try {
     let census;
@@ -138,7 +140,7 @@ const handleSubmitElec = async (
   } catch (err: any) {
     console.log(err.message);
   } finally {
-    setIsLoading(false);
+    onClose();
   }
 };
 
