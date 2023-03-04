@@ -50,7 +50,7 @@ const CreateProcessAddress = ({
           />
         </Flex>
         <Input
-          {...register(`addresses.${i}.address` as const)}
+          {...register(`addresses.${i}.address` as const, { required: true })}
           placeholder={`Address ${i + 1}`}
         />
       </FormControl>

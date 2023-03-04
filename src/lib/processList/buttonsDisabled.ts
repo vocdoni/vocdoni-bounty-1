@@ -13,6 +13,7 @@ export const getButtonsDisabled = (
     el.status === ElectionStatus.RESULTS ||
     el.status === ElectionStatus.CANCELED ||
     el.status === ElectionStatus.ENDED;
+
   const readyDisabled = el.status === ElectionStatus.READY;
   const pauseDisabled = el.status === ElectionStatus.PAUSED;
 
@@ -22,5 +23,5 @@ export const getButtonsDisabled = (
   if (electionStatus === ElectionStatus.PAUSED)
     return allDisabled || pauseDisabled;
 
-  if (electionStatus.CANCELED) return allDisabled;
+  if (electionStatus === ElectionStatus.CANCELED) return allDisabled;
 };

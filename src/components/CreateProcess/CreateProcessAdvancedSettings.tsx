@@ -5,7 +5,6 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
-  Checkbox,
   Flex,
   FormControl,
   FormLabel,
@@ -16,6 +15,8 @@ import {
   UseFormGetValues,
   UseFormRegister,
 } from 'react-hook-form';
+import AdvancedSettingCheckbox from './AdvancedSettingCheckbox';
+import AdvancesSettignsAutostart from './AdvancedSettingsAutostart';
 
 interface Props {
   register: UseFormRegister<FieldValues>;
@@ -33,47 +34,29 @@ const CreateProcessAdvancedSettings = ({ register, getValues }: Props) => (
       </AccordionButton>
 
       <AccordionPanel pb={4}>
+        <AdvancesSettignsAutostart register={register} getValues={getValues} />
         <Flex
-          gap={{ base: 3, md: 8 }}
+          gap={{ base: 6, sm: 3 }}
+          justifyContent="space-between"
           flexDirection={{ base: 'column', md: 'row' }}
           alignItems={{ base: 'start', md: 'end' }}
           mb={3}
         >
-          <FormControl display="flex" alignItems="center" width="auto">
-            <FormLabel pt={2}>Autostart</FormLabel>
-            <Checkbox {...register(`electionType.autoStart`)} />
-          </FormControl>
-          {!getValues().electionType.autoStart && (
-            <FormControl
-              display="flex"
-              flexDirection={{ base: 'column', sm: 'row' }}
-              alignItems={{ base: 'start', sm: 'end' }}
-            >
-              <FormLabel whiteSpace="nowrap">Start date:</FormLabel>
-              <Input type="date" width="180px" {...register(`dates.start`)} />
-            </FormControl>
-          )}
-        </Flex>
-        <Flex
-          gap={{ base: 4, sm: 3 }}
-          flexDirection={{ base: 'column', md: 'row' }}
-          alignItems={{ base: 'start', md: 'end' }}
-          mb={3}
-        >
-          <FormControl display="flex" alignItems="center">
-            <FormLabel pt={2} whiteSpace="nowrap">
-              Weighted vote
-            </FormLabel>
-            <Checkbox {...register(`weightedVote`)} />
-          </FormControl>
-          <FormControl display="flex" alignItems="center">
-            <FormLabel pt={2}>Interruptible</FormLabel>
-            <Checkbox {...register(`electionType.interruptible`)} />
-          </FormControl>
-          <FormControl display="flex" alignItems="center" whiteSpace="nowrap">
-            <FormLabel pt={2}>Secret until the end</FormLabel>
-            <Checkbox {...register(`electionType.secretUntilTheEnd`)} />
-          </FormControl>
+          <AdvancedSettingCheckbox
+            register={register}
+            label="Weighted vote"
+            field="weightedVote"
+          />
+          <AdvancedSettingCheckbox
+            register={register}
+            label="Interruptible"
+            field="electionType.interruptible"
+          />
+          <AdvancedSettingCheckbox
+            register={register}
+            label="Secret until the end"
+            field="electionType.secretUntilTheEnd"
+          />
         </Flex>
         <FormControl
           display="flex"

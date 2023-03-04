@@ -53,7 +53,9 @@ const CreateProcessQuestionOptions = ({
           />
         </Flex>
         <Input
-          {...register(`questions.${index}.options.${idx}.option` as const)}
+          {...register(`questions.${index}.options.${idx}.option` as const, {
+            required: true,
+          })}
           placeholder={`Option ${idx + 1}`}
         />
       </FormControl>

@@ -10,12 +10,15 @@ const CreateProcessHeader = () => {
       <>
         <FormControl mb={4}>
           <FormLabel fontSize="1.3em">Title</FormLabel>
-          <Input {...register('titleProcess')} placeholder="Title" />
+          <Input
+            {...register('titleProcess', { required: true })}
+            placeholder="Title"
+          />
         </FormControl>
         <FormControl>
           <FormLabel>Description</FormLabel>
           <Input
-            {...register('descriptionProcess')}
+            {...register('descriptionProcess', { required: true })}
             placeholder="Description"
           />
         </FormControl>
