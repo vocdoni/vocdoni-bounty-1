@@ -6,7 +6,7 @@ import { useClientContext } from '@vocdoni/react-components';
 import { useContext } from 'react';
 import { MODAL_TYPE } from '../../constants/modalType';
 import { UpdatedBalanceContext } from '../../lib/contexts/UpdatedBalanceContext';
-import ModalCustom from '../Modals/ModalCustom';
+import ModalWrapper from '../Modals/ModalWrapper';
 
 const BtnVocdoniTokens = () => {
   const { client } = useClientContext();
@@ -14,7 +14,7 @@ const BtnVocdoniTokens = () => {
   const { updatedBalance, updateBalance } = useContext(UpdatedBalanceContext);
   return (
     <>
-      <ModalCustom
+      <ModalWrapper
         isOpen={isOpen}
         onClose={onClose}
         type={MODAL_TYPE.LOADING}

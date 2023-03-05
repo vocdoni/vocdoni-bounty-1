@@ -22,6 +22,7 @@ const ProcessesList = () => {
       onlyCurrentElections: false,
     },
   });
+
   methodsFilters.watch(['onlyCurrentElections', 'search']);
 
   const electionsListFiltered = getElectionsToDisplay(
@@ -34,7 +35,9 @@ const ProcessesList = () => {
     client
       .fetchElections()
       .then((res) => setElectionsList(res))
-      .catch(console.log);
+      .catch((err) => {
+        throw new Error();
+      });
   }, [client, account, electionsList.length]);
 
   return (

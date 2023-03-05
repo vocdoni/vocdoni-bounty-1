@@ -1,7 +1,7 @@
 import { Button, useDisclosure } from '@chakra-ui/react';
 import { useClientContext } from '@vocdoni/react-components';
 import { VocdoniSDKClient } from '@vocdoni/sdk';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { MODAL_TYPE } from '../../constants/modalType';
 import { UpdatedBalanceContext } from '../../lib/contexts/UpdatedBalanceContext';
@@ -11,7 +11,7 @@ import {
   getWeightedCensus,
   handleElection,
 } from '../../lib/sdk/sdk';
-import ModalCustom from '../Modals/ModalCustom';
+import ModalWrapper from '../Modals/ModalWrapper';
 import WrapperForm from '../Wrappers/WrapperForm';
 import CreateProcessAddresses from './CreateProcessAddresses';
 import CreateProcessHeader from './CreateProcessHeader';
@@ -56,6 +56,7 @@ const CreateProcess = () => {
   const { updateBalance } = useContext(UpdatedBalanceContext);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [modalType, setModalType] = useState(MODAL_TYPE.LOADING);
 
   const methods = useForm<FormValues>({
     defaultValues: {
@@ -85,11 +86,19 @@ const CreateProcess = () => {
       ],
     },
   });
+
   const onSubmit: SubmitHandler<FormValues> = async (data: FormValues) => {
-    onOpen();
-    await handleSubmitElection(data, client);
-    updateBalance();
-    onClose();
+    try {
+      onOpen();
+      await handleSubmitElection(data, client);
+      updateBalance();
+      onClose();
+      setModalType(MODAL_TYPE.SUCCESS);
+      onOpen();
+    } catch (err) {
+      throw new Error();
+    } finally {
+    }
   };
 
   useEffect(() => {
@@ -99,11 +108,7 @@ const CreateProcess = () => {
 
   return (
     <FormProvider {...methods}>
-      <ModalCustom
-        type={MODAL_TYPE.LOADING}
-        isOpen={isOpen}
-        onClose={onClose}
-      />
+      <ModalWrapper type={modalType} isOpen={isOpen} onClose={onClose} />
       <WrapperForm onSubmit={methods.handleSubmit(onSubmit)}>
         <>
           <CreateProcessHeader />
@@ -124,25 +129,19 @@ const handleSubmitElection = async (
   client: VocdoniSDKClient
 ) => {
   await client.createAccount();
-  try {
-    let census;
+  let census;
 
-    if (data.weightedVote) census = await getWeightedCensus(data.addresses);
-    else {
-      const addresses = data.addresses.map((add) => add.address);
-      census = await getPlainCensus(addresses);
-    }
-
-    const election = await handleElection(data, census);
-
-    await addQuestions(election, data.questions);
-
-    const id = await client.createElection(election);
-
-    console.log('id', id);
-  } catch (err: any) {
-    console.log(err.message);
+  if (data.weightedVote) census = await getWeightedCensus(data.addresses);
+  else {
+    const addresses = data.addresses.map((add) => add.address);
+    census = await getPlainCensus(addresses);
   }
+
+  const election = await handleElection(data, census);
+
+  await addQuestions(election, data.questions);
+
+  await client.createElection(election);
 };
 
 export default CreateProcess;

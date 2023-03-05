@@ -13,7 +13,7 @@ import { FaPause, FaPlay, FaStop } from 'react-icons/fa';
 import { MODAL_TYPE } from '../../constants/modalType';
 import { UpdatedBalanceContext } from '../../lib/contexts/UpdatedBalanceContext';
 import { getButtonsDisabled } from '../../lib/processList/buttonsDisabled';
-import ModalCustom from '../Modals/ModalCustom';
+import ModalWrapper from '../Modals/ModalWrapper';
 
 interface Props {
   el: PublishedElection;
@@ -25,7 +25,7 @@ const ProcessListActionButtons = ({ el, setElectionsList }: Props) => {
 
   const { updateBalance } = useContext(UpdatedBalanceContext);
 
-  const [modalType, setModalType] = useState(MODAL_TYPE.CLOSE);
+  const [modalType, setModalType] = useState(MODAL_TYPE.CLOSED);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -48,7 +48,12 @@ const ProcessListActionButtons = ({ el, setElectionsList }: Props) => {
 
   return (
     <HStack spacing={4} justifyContent="end" flex="0 0 160px">
-      <ModalCustom isOpen={isOpen} onClose={onClose} type={modalType} el={el} />
+      <ModalWrapper
+        isOpen={isOpen}
+        onClose={onClose}
+        type={modalType}
+        el={el}
+      />
       <Box position="relative">
         <ButtonGroup size="sm" isAttached variant="outline" position="relative">
           <>
